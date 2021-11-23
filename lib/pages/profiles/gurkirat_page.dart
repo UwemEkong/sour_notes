@@ -18,21 +18,35 @@ class _GurkiratPage extends State<GurkiratPage> {
       ),
       body: Container(
         child: Center(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(10),
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text:
-                          'Hello, my name is Gurkirat! I am the CFO and temporary window washer of SourNotes.',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        height: 1.5,
-                        fontSize: 25,
-                        color: Colors.blue[500],
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text:
+                            'Hello, my name is Gurkirat! I am the CFO and temporary window washer of SourNotes.',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Colors.blue[500],
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text:
+                                  '\n\n Favorite Song: \n Lose Yourself \n By: Eminem',
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.red[500])),
+                          TextSpan(
+                              text:
+                                  '\n\n Contact: \n Phone: (805) 629 - 4759 \n E-Mail: gillgurkirat@yahoo.com \n',
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.yellow[500]))
+                        ],
                       ),
+<<<<<<< Updated upstream
                       children: <TextSpan>[
                         TextSpan(
                             text:
@@ -45,12 +59,14 @@ class _GurkiratPage extends State<GurkiratPage> {
                             style: TextStyle(
                                 fontSize: 20, color: Colors.yellow[500]))
                       ],
+=======
+>>>>>>> Stashed changes
                     ),
                   ),
                 ),
-              ),
-              Image(image: AssetImage('assets/niraj1.jpg'))
-            ],
+                Image(image: AssetImage('assets/gurkirat1.jpg'))
+              ],
+            ),
           ),
         ),
       ),
