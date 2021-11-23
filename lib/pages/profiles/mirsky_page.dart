@@ -2,55 +2,56 @@
 
 import 'package:flutter/material.dart';
 
-class MirksyPage extends StatefulWidget {
+class MirskyPage extends StatefulWidget {
   @override
-  _MirksyPage createState() => _MirksyPage();
+  _MirskyPage createState() => _MirskyPage();
 }
 
-class _MirksyPage extends State<MirksyPage> {
+class _MirskyPage extends State<MirskyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.greenAccent,
       appBar: AppBar(
-        title: Text('Dr. Mirksy'),
+        title: Text('Dr. Mirsky'),
         backgroundColor: Colors.greenAccent,
       ),
       body: Container(
         child: Center(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(10),
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text:
-                          'Hello, my name is Dr. Mirksy! I am the owner of Sour Notes.',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        height: 1.5,
-                        fontSize: 25,
-                        color: Colors.blue[500],
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Image(image: AssetImage('assets/mirsky1.jpg')),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text:
+                            '\nHello, my name is Dr. Mirksy! I am the owner of Sour Notes. I love pineapples.',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Colors.blue[500],
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text:
+                                  '\n\n Favorite Song: \n Pen-Pineapple-Apple-Pen \n By: Pikataro',
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.red[500])),
+                          TextSpan(
+                              text:
+                                  '\n\n Contact: \n Phone: (309) 438 - 8945 \n E-Mail: mirksydr@yahoo.com \n',
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.yellow[500]))
+                        ],
                       ),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text:
-                                '\n Favorite Song: \n Pen-Pineapple-Apple-Pen \n By: Pikataro',
-                            style: TextStyle(
-                                fontSize: 20, color: Colors.red[500])),
-                        TextSpan(
-                            text:
-                                '\n Contact: \n Phone: (309) 438 - 8945 \n E-Mail: mirksydr@yahoo.com',
-                            style: TextStyle(
-                                fontSize: 20, color: Colors.yellow[500]))
-                      ],
                     ),
                   ),
                 ),
-              ),
-              Image(image: AssetImage('assets/mirsky1.jpg'))
-            ],
+              ],
+            ),
           ),
         ),
       ),
