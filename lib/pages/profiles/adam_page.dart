@@ -36,12 +36,12 @@ class _AdamPage extends State<AdamPage> {
                       children: <TextSpan>[
                         TextSpan(
                             text:
-                                '\n Favorite Song: \n 3005 \n By: Childish Gambino',
+                                '\n\n Favorite Song: \n 3005 \n By: Childish Gambino',
                             style: TextStyle(
                                 fontSize: 20, color: Colors.red[500])),
                         TextSpan(
                             text:
-                                '\n Contact: \n Phone: (957) 247 - 1214 \n E-Mail: chaplinadam@yahoo.com',
+                                '\n\n Contact: \n Phone: (957) 247 - 1214 \n E-Mail: chaplinadam@yahoo.com \n',
                             style: TextStyle(
                                 fontSize: 20, color: Colors.yellow[500]))
                       ],

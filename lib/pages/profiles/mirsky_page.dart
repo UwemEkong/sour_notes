@@ -36,12 +36,12 @@ class _MirksyPage extends State<MirksyPage> {
                       children: <TextSpan>[
                         TextSpan(
                             text:
-                                '\n Favorite Song: \n Pen-Pineapple-Apple-Pen \n By: Pikataro',
+                                '\n\n Favorite Song: \n Pen-Pineapple-Apple-Pen \n By: Pikataro',
                             style: TextStyle(
                                 fontSize: 20, color: Colors.red[500])),
                         TextSpan(
                             text:
-                                '\n Contact: \n Phone: (309) 438 - 8945 \n E-Mail: mirksydr@yahoo.com',
+                                '\n\n Contact: \n Phone: (309) 438 - 8945 \n E-Mail: mirksydr@yahoo.com \n',
                             style: TextStyle(
                                 fontSize: 20, color: Colors.yellow[500]))
                       ],

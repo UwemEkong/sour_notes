@@ -36,11 +36,11 @@ class _UwemPage extends State<UwemPage> {
                       children: <TextSpan>[
                         TextSpan(
                             text:
-                            '\n Favorite Song: \n Runaway \n By: Kanye West',
+                            '\n\n Favorite Song: \n Runaway \n By: Kanye West',
                             style: TextStyle(fontSize: 20, color: Colors.red[500])),
                         TextSpan(
                             text:
-                            '\n Contact: \n Phone: (492) 871 - 2937 \n E-Mail: ekonguwem@yahoo.com',
+                            '\n\n Contact: \n Phone: (492) 871 - 2937 \n E-Mail: ekonguwem@yahoo.com \n',
                             style: TextStyle(fontSize: 20, color: Colors.yellow[500]))
                       ],
                     ),

@@ -36,12 +36,12 @@ class _NirajPage extends State<NirajPage> {
                       children: <TextSpan>[
                         TextSpan(
                             text:
-                                '\n Favorite Song: \n Never Gonna Give You Up \n By: Rick Astley',
+                                '\n\n Favorite Song: \n Never Gonna Give You Up \n By: Rick Astley',
                             style: TextStyle(
                                 fontSize: 20, color: Colors.red[500])),
                         TextSpan(
                             text:
-                                '\n Contact: \n Phone: (309) 438 - 8945 \n E-Mail: patelniraj@yahoo.com',
+                                '\n\n Contact: \n Phone: (309) 438 - 8945 \n E-Mail: patelniraj@yahoo.com \n',
                             style: TextStyle(
                                 fontSize: 20, color: Colors.yellow[500]))
                       ],
