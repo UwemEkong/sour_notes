@@ -12,13 +12,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.greenAccent,
+      appBar: AppBar(
+        title: Text('SourNotes'),
         backgroundColor: Colors.greenAccent,
-        appBar: AppBar(
-          title: Text('SourNotes'),
-          backgroundColor: Colors.greenAccent,
-        ),
-        body: Center(
-            child: Column(
+      ),
+      body: Center(
+        child: Column(
           children: [
             Padding(
               padding: EdgeInsets.all(10),
@@ -45,6 +45,8 @@ class _HomePageState extends State<HomePage> {
               height: 20,
             ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }

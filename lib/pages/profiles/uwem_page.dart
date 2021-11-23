@@ -18,37 +18,40 @@ class _UwemPage extends State<UwemPage> {
       ),
       body: Container(
         child: Center(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(10),
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text:
-                      'Hello, my name is Uwem! I am the CIO and temporary table cleaner of SourNotes.',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        height: 1.5,
-                        fontSize: 25,
-                        color: Colors.blue[500],
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Image(image: AssetImage('assets/uwem1.jpg')),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text:
+                            '\nHello, my name is Uwem! I am the CIO and temporary table cleaner of SourNotes.',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Colors.blue[500],
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text:
+                                  '\n\n Favorite Song: \n Runaway \n By: Kanye West',
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.red[500])),
+                          TextSpan(
+                              text:
+                                  '\n\n Contact: \n Phone: (492) 871 - 2937 \n E-Mail: ekonguwem@yahoo.com \n',
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.yellow[500]))
+                        ],
                       ),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text:
-                            '\n Favorite Song: \n Runaway \n By: Kanye West',
-                            style: TextStyle(fontSize: 20, color: Colors.red[500])),
-                        TextSpan(
-                            text:
-                            '\n Contact: \n Phone: (492) 871 - 2937 \n E-Mail: ekonguwem@yahoo.com',
-                            style: TextStyle(fontSize: 20, color: Colors.yellow[500]))
-                      ],
                     ),
                   ),
                 ),
-              ),
-              Image(image: AssetImage('assets/uwem1.jpg'))
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sour_notes/login.dart';
 import 'package:sour_notes/pages/profiles/adam_page.dart';
 import 'package:sour_notes/pages/profiles/gurkirat_page.dart';
 import 'package:sour_notes/pages/profiles/niraj_page.dart';
@@ -8,7 +9,6 @@ import 'package:sour_notes/pages/profiles/mirsky_page.dart';
 import 'package:sour_notes/pages/home_page.dart';
 import 'package:sour_notes/pages/about_us_page.dart';
 
-import '../login.dart';
 
 class RouteManager {
   static const String homePage = '/';
