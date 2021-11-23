@@ -9,7 +9,6 @@ import 'package:sour_notes/pages/profiles/mirsky_page.dart';
 import 'package:sour_notes/pages/home_page.dart';
 import 'package:sour_notes/pages/about_us_page.dart';
 
-
 class RouteManager {
   static const String homePage = '/';
   static const String loginPage = '/loginPage';
@@ -29,7 +28,7 @@ class RouteManager {
         );
       case loginPage:
         return MaterialPageRoute(
-          builder: (context) => EntryRoute(),
+          builder: (context) => MyCustomForm(),
         );
 
       case aboutUsPage:
