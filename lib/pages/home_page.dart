@@ -44,6 +44,15 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 20,
             ),
+            ElevatedButton(
+              child: Text('Music'),
+              onPressed: () {
+                Navigator.of(context).pushNamed(RouteManager.songListPage);
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
           ],
         )));
   }
