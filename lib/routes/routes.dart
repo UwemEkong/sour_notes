@@ -31,7 +31,7 @@ class RouteManager {
         );
       case loginPage:
         return MaterialPageRoute(
-          builder: (context) => EntryRoute(),
+          builder: (context) => MyCustomForm(),
         );
       case songListPage:
         return MaterialPageRoute(
