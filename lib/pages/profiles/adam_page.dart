@@ -36,7 +36,7 @@ class _AdamPage extends State<AdamPage> {
                       children: <TextSpan>[
                         TextSpan(
                             text:
-                                '\n Favorite Song: \n Never Gonna Give You Up \n By: Rick Astley',
+                                '\n Favorite Song: \n 3005 \n By: Childish Gambino',
                             style: TextStyle(
                                 fontSize: 20, color: Colors.red[500])),
                         TextSpan(
@@ -49,7 +49,7 @@ class _AdamPage extends State<AdamPage> {
                   ),
                 ),
               ),
-              Image(image: AssetImage('assets/niraj1.jpg'))
+              Image(image: AssetImage('assets/adam1.jpg'))
             ],
           ),
         ),

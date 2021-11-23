@@ -36,7 +36,7 @@ class _UwemPage extends State<UwemPage> {
                       children: <TextSpan>[
                         TextSpan(
                             text:
-                            '\n Favorite Song: \n Never Gonna Give You Up \n By: Rick Astley',
+                            '\n Favorite Song: \n Runaway \n By: Kanye West',
                             style: TextStyle(fontSize: 20, color: Colors.red[500])),
                         TextSpan(
                             text:
@@ -47,7 +47,7 @@ class _UwemPage extends State<UwemPage> {
                   ),
                 ),
               ),
-              Image(image: AssetImage('assets/niraj1.jpg'))
+              Image(image: AssetImage('assets/uwem1.jpg'))
             ],
           ),
         ),
