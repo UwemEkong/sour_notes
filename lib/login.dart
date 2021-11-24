@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:sour_notes/routes/routes.dart';
 import './widgets/alert.dart';
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 // Define a custom Form widget.
 class MyCustomForm extends StatefulWidget {
@@ -21,7 +22,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
   String? _errorText = "";
-  int? _attempts = 5;
+  int? attempts = 5;
   bool _isEnabled = true;
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -36,29 +37,37 @@ class _MyCustomFormState extends State<MyCustomForm> {
   }
 
   login(String userName, String password, BuildContext context) async {
-    var url = 'http://10.0.2.2:8080/api/auth/login/$userName/$password';
+    String url = getUrlForDevice(userName, password);
     var res = await http.get(Uri.parse(url));
     var body = res.body;
     print(body);
-    if (_attempts! <= 0) {
+    if (attempts! <= 0) {
       setState(() => _isEnabled = false);
     }
     if (body == "Incorrect Username") {
-      if (_attempts! <= 0) {
-        setState(() => _attempts = _attempts! + 1);
+      if (attempts! <= 0) {
+        setState(() => attempts = attempts! + 1);
       }
       setState(() => _errorText = "Incorrect Username");
-      setState(() => _attempts = _attempts! - 1);
-      print(_attempts);
+      setState(() => attempts = attempts! - 1);
+      print(attempts);
     } else if (body == "Incorrect Password") {
-      if (_attempts! <= 0) {
-        setState(() => _attempts = _attempts! + 1);
+      if (attempts! <= 0) {
+        setState(() => attempts = attempts! + 1);
       }
       setState(() => _errorText = "Incorrect Password");
-      setState(() => _attempts = _attempts! - 1);
-      print(_attempts);
+      setState(() => attempts = attempts! - 1);
+      print(attempts);
     } else {
       Navigator.of(context).pushNamed(RouteManager.homePage);
+    }
+  }
+
+  String getUrlForDevice(String userName, String password) {
+    if (Platform.isAndroid) {
+      return 'http://10.0.2.2:8080/api/auth/login/$userName/$password';
+    } else {
+      return 'http://localhost:8080/api/auth/login/$userName/$password';
     }
   }
 
@@ -98,7 +107,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Text("Attempts left: " + "$_attempts",
+            child: Text("Attempts left: " + "$attempts",
                 style: TextStyle(
                     height: 1.25, fontSize: 20, color: Colors.red[500])),
           ),
