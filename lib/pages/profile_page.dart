@@ -1,15 +1,17 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:sour_notes/models/profile.dart';
 
-class AdamPage extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
   @override
-  _AdamPage createState() => _AdamPage();
+  _ProfilePage createState() => _ProfilePage();
 }
 
-class _AdamPage extends State<AdamPage> {
+class _ProfilePage extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Profile;
     return Scaffold(
       backgroundColor: Colors.greenAccent,
       appBar: AppBar(
@@ -21,14 +23,13 @@ class _AdamPage extends State<AdamPage> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Image(image: AssetImage('assets/adam1.jpg')),
+                Image(image: AssetImage(args.imageURL)),
                 Container(
                   padding: EdgeInsets.all(10),
                   child: Center(
                     child: RichText(
                       text: TextSpan(
-                        text:
-                            '\nHello, my name is Adam! I am the COO and temporary floor sweeper of SourNotes.',
+                        text: '\n${args.bio}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
@@ -37,12 +38,12 @@ class _AdamPage extends State<AdamPage> {
                         children: <TextSpan>[
                           TextSpan(
                               text:
-                                  '\n\n Favorite Song: \n 3005 \n By: Childish Gambino',
+                                  '\n\n Favorite Song: \n ${args.favoriteSong} \n By: ${args.favoriteSongArtist}',
                               style: TextStyle(
                                   fontSize: 20, color: Colors.red[500])),
                           TextSpan(
                               text:
-                                  '\n\n Contact: \n Phone: (957) 247 - 1214 \n E-Mail: chaplinadam@yahoo.com \n',
+                                  '\n\n Contact: \n Phone: ${args.phoneNumber} \n E-Mail: ${args.email} \n',
                               style: TextStyle(
                                   fontSize: 20, color: Colors.yellow[500]))
                         ],

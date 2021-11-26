@@ -40,7 +40,6 @@ class _MyCustomFormState extends State<MyCustomForm> {
     String url = getUrlForDevice(userName, password);
     var res = await http.get(Uri.parse(url));
     var body = res.body;
-    print(body);
     if (attempts! <= 0) {
       setState(() => _isEnabled = false);
     }
@@ -50,14 +49,12 @@ class _MyCustomFormState extends State<MyCustomForm> {
       }
       setState(() => _errorText = "Incorrect Username");
       setState(() => attempts = attempts! - 1);
-      print(attempts);
     } else if (body == "Incorrect Password") {
       if (attempts! <= 0) {
         setState(() => attempts = attempts! + 1);
       }
       setState(() => _errorText = "Incorrect Password");
       setState(() => attempts = attempts! - 1);
-      print(attempts);
     } else {
       Navigator.of(context).pushNamed(RouteManager.homePage);
     }
@@ -76,7 +73,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
     return Scaffold(
       backgroundColor: Colors.greenAccent,
       appBar: AppBar(
-        title: Text('SourNotes'),
+        title: const Text('SourNotes'),
         backgroundColor: Colors.greenAccent,
       ),
       body: Center(

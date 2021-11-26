@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:sour_notes/models/profile.dart';
 import 'package:sour_notes/routes/routes.dart';
 
 class AboutUsPage extends StatefulWidget {
@@ -38,14 +39,22 @@ class _AboutUsPage extends State<AboutUsPage> {
                 padding: EdgeInsets.all(10),
                 child: Text('Developers:',
                     style: TextStyle(
-                        height: 1.25,
-                        fontSize: 20,
-                        color: Colors.blue[500])),
+                        height: 1.25, fontSize: 20, color: Colors.blue[500])),
               ),
               ElevatedButton(
                 child: Text('Adam Chaplin'),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(RouteManager.adamPage);
+                  Navigator.pushNamed(
+                    context,
+                    RouteManager.profilePage,
+                    arguments: Profile(
+                        '../assets/adam1.jpg',
+                        'Hello, my name is Adam! I am the COO and temporary floor sweeper of SourNotes.',
+                        '3005',
+                        'Childish Gambino',
+                        '(957) 247 - 1214',
+                        'chaplinadam@yahoo.com'),
+                  );
                 },
               ),
               SizedBox(
@@ -54,7 +63,17 @@ class _AboutUsPage extends State<AboutUsPage> {
               ElevatedButton(
                 child: Text('Gurkirat Gill'),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(RouteManager.gurkiratPage);
+                  Navigator.pushNamed(
+                    context,
+                    RouteManager.profilePage,
+                    arguments: Profile(
+                        '../assets/gurkirat1.jpg',
+                        'Hello, my name is Gurkirat! I am the CFO and temporary window washer of SourNotes.',
+                        'Lose Yourself',
+                        'Eminem',
+                        '(805) 629 - 4759',
+                        'gillgurkirat@yahoo.com'),
+                  );
                 },
               ),
               SizedBox(
@@ -63,7 +82,17 @@ class _AboutUsPage extends State<AboutUsPage> {
               ElevatedButton(
                 child: Text('Niraj Patel'),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(RouteManager.nirajPage);
+                  Navigator.pushNamed(
+                    context,
+                    RouteManager.profilePage,
+                    arguments: Profile(
+                        '../assets/niraj1.jpg',
+                        'Hello, my name is Niraj! I am the CMO and temporary dish washer of SourNotes.',
+                        'Never Gonna Give You Up',
+                        'Rick Astley',
+                        '(309) 438 - 8945',
+                        'patelniraj@yahoo.com'),
+                  );
                 },
               ),
               SizedBox(
@@ -72,7 +101,17 @@ class _AboutUsPage extends State<AboutUsPage> {
               ElevatedButton(
                 child: Text('Uwem Ekong'),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(RouteManager.uwemPage);
+                  Navigator.pushNamed(
+                    context,
+                    RouteManager.profilePage,
+                    arguments: Profile(
+                        '../assets/uwem1.jpg',
+                        'Hello, my name is Uwem! I am the CIO and temporary table cleaner of SourNotes.',
+                        'Runaway',
+                        'Kanye West',
+                        '(492) 871 - 2937',
+                        'ekonguwem@yahoo.com'),
+                  );
                 },
               ),
               SizedBox(
@@ -87,7 +126,17 @@ class _AboutUsPage extends State<AboutUsPage> {
               ElevatedButton(
                 child: Text('Dr. Mirksy'),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(RouteManager.mirskyPage);
+                  Navigator.pushNamed(
+                    context,
+                    RouteManager.profilePage,
+                    arguments: Profile(
+                        '../assets/mirsky1.jpg',
+                        'Hello, my name is Dr. Mirksy! I am the owner of Sour Notes. I love pineapples.',
+                        'Pen-Pineapple-Apple-Pen',
+                        'Pikataro',
+                        '(309) 438 - 8945',
+                        'mirksydr@yahoo.com'),
+                  );
                 },
               ),
               SizedBox(
