@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sour_notes/models/loginmessage.dart';
-import './services/loginservice.dart';
-import 'models/user.dart';
+import '../models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:sour_notes/routes/routes.dart';
-import './widgets/alert.dart';
+import '../widgets/alert.dart';
 import 'dart:convert';
 import 'dart:io' show Platform;
 
@@ -26,7 +25,6 @@ class _MyCustomFormState extends State<MyCustomForm> {
   bool _isEnabled = true;
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
-  HttpService httpService = HttpService();
 
   @override
   void dispose() {
@@ -40,7 +38,6 @@ class _MyCustomFormState extends State<MyCustomForm> {
     String url = getUrlForDevice(userName, password);
     var res = await http.get(Uri.parse(url));
     var body = res.body;
-    print(body);
     if (attempts! <= 0) {
       setState(() => _isEnabled = false);
     }
@@ -50,14 +47,12 @@ class _MyCustomFormState extends State<MyCustomForm> {
       }
       setState(() => _errorText = "Incorrect Username");
       setState(() => attempts = attempts! - 1);
-      print(attempts);
     } else if (body == "Incorrect Password") {
       if (attempts! <= 0) {
         setState(() => attempts = attempts! + 1);
       }
       setState(() => _errorText = "Incorrect Password");
       setState(() => attempts = attempts! - 1);
-      print(attempts);
     } else {
       Navigator.of(context).pushNamed(RouteManager.homePage);
     }
@@ -76,7 +71,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
     return Scaffold(
       backgroundColor: Colors.greenAccent,
       appBar: AppBar(
-        title: Text('SourNotes'),
+        title: const Text('SourNotes'),
         backgroundColor: Colors.greenAccent,
       ),
       body: Center(

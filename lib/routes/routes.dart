@@ -1,27 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:sour_notes/pages/profiles/adam_page.dart';
-import 'package:sour_notes/pages/profiles/gurkirat_page.dart';
-import 'package:sour_notes/pages/profiles/niraj_page.dart';
-import 'package:sour_notes/pages/profiles/uwem_page.dart';
-import 'package:sour_notes/pages/profiles/mirsky_page.dart';
-
+import 'package:sour_notes/models/profile.dart';
 import 'package:sour_notes/pages/home_page.dart';
 import 'package:sour_notes/pages/about_us_page.dart';
+import 'package:sour_notes/pages/profile_page.dart';
 import 'package:sour_notes/pages/song_list.dart';
 
-import '../login.dart';
+import '../pages/login.dart';
 
 class RouteManager {
   static const String homePage = '/';
   static const String loginPage = '/loginPage';
   static const String aboutUsPage = '/aboutUsPage';
   static const String songListPage = '/songList';
-
-  static const String adamPage = '/adamPage';
-  static const String gurkiratPage = '/gurkiratPage';
-  static const String nirajPage = '/nirajPage';
-  static const String uwemPage = '/uwemPage';
-  static const String mirskyPage = '/mirskyPage';
+  static const String profilePage = '/profilePage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -42,25 +33,9 @@ class RouteManager {
         return MaterialPageRoute(
           builder: (context) => AboutUsPage(),
         );
-      case adamPage:
+      case profilePage:
         return MaterialPageRoute(
-          builder: (context) => AdamPage(),
-        );
-      case gurkiratPage:
-        return MaterialPageRoute(
-          builder: (context) => GurkiratPage(),
-        );
-      case nirajPage:
-        return MaterialPageRoute(
-          builder: (context) => NirajPage(),
-        );
-      case uwemPage:
-        return MaterialPageRoute(
-          builder: (context) => UwemPage(),
-        );
-      case mirskyPage:
-        return MaterialPageRoute(
-          builder: (context) => MirskyPage(),
+          builder: (context) => ProfilePage(profile: Profile.noArgs()),
         );
       default:
         return MaterialPageRoute(
