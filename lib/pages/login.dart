@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sour_notes/models/loginmessage.dart';
-import './services/loginservice.dart';
-import 'models/user.dart';
+import '../models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:sour_notes/routes/routes.dart';
-import './widgets/alert.dart';
+import '../widgets/alert.dart';
 import 'dart:convert';
 import 'dart:io' show Platform;
 
@@ -26,7 +25,6 @@ class _MyCustomFormState extends State<MyCustomForm> {
   bool _isEnabled = true;
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
-  HttpService httpService = HttpService();
 
   @override
   void dispose() {
