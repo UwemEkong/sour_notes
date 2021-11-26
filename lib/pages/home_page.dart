@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sour_notes/models/loginmessage.dart';
 import 'package:sour_notes/models/user.dart';
@@ -22,7 +24,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   getAuthedUser() async {
-    var url = 'http://10.0.2.2:8080/api/auth/getloggedinuser';
+    var url = Platform.isAndroid
+        ? 'http://10.0.2.2:8080/api/auth/getloggedinuser'
+        : 'http://localhost:8080/api/auth/getloggedinuser';
     var res = await http.get(Uri.parse(url));
     var body = res.body;
 
