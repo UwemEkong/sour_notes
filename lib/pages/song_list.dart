@@ -23,8 +23,7 @@ class _SongListPage extends State<SongListPage> {
 //Get all songs to show on page as default, so in the backend this can maybe be changed to
 //just the first 10 songs if we have a lot
   Future<List<Song>> _getAllSongs() async {
-    String url = /*getUrlForDevice()*/ "http://localhost:8080/api/song/" +
-        "getAllSongs";
+    String url = getUrlForSongsForDevice() + "getAllSongs";
 
     var res = await http.get(Uri.parse(url));
     var body = res.body;
@@ -49,38 +48,6 @@ class _SongListPage extends State<SongListPage> {
     return songs;
   }
 
-// START BUILDING HERE
-
-  //Future<List<Song>> _getSongList() {}
-
-  // TableRow newSongTableRow(String title, String artist, int rating) {
-  //   String notes = "🎵" * rating;
-
-  //   return TableRow(children: [
-  //     Column(children: [Text(title)]),
-  //     Column(children: [Text(artist)]),
-  //     Column(children: [Text(notes)]),
-  //   ]);
-  // }
-
-  // List<TableRow> getSongRowsToDisplay(List songsFromBackend) {
-  //   //Start with column headings
-  //   List<TableRow> songRows = [
-  //     TableRow(children: [
-  //       Column(children: [Text('Title', style: TextStyle(fontSize: 20.0))]),
-  //       Column(children: [Text('Artist', style: TextStyle(fontSize: 20.0))]),
-  //       Column(children: [Text('Rating', style: TextStyle(fontSize: 20.0))]),
-  //     ]),
-  //   ];
-
-  //   for (var i = 0; i < songsFromBackend.length; i++) {
-  //     songRows.add(newSongTableRow(songsFromBackend[i].title,
-  //         songsFromBackend[i].artist, songsFromBackend[i].rating));
-  //   }
-
-  //   return songRows;
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,6 +63,7 @@ class _SongListPage extends State<SongListPage> {
               child: FutureBuilder(
                   future: _getAllSongs(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    // If JSON data has not arrived yet show loading
                     if (snapshot.data == null) {
                       return Container(
                         child: Center(
@@ -103,16 +71,19 @@ class _SongListPage extends State<SongListPage> {
                         ),
                       );
                     } else {
+                      //Once the JSON Data has arrived build the list
                       return ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext context, int index) {
+                            //List tile / Song row
                             return ListTile(
                               title: Text(snapshot.data[index].title),
                               subtitle: Text(snapshot.data[index].artist),
                               trailing: Text(snapshot.data[index].getNotes()),
                               onTap: () {
+                                //When user clicks the row/tile they go to the song's detail page
                                 Navigator.push(
                                     context,
                                     new MaterialPageRoute(
@@ -125,26 +96,4 @@ class _SongListPage extends State<SongListPage> {
                   })),
         ])));
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //       backgroundColor: Colors.greenAccent,
-  //       appBar: AppBar(
-  //         title: Text('Music'),
-  //         backgroundColor: Colors.greenAccent,
-  //       ),
-  //       body: Center(
-  //           child: Column(children: <Widget>[
-  //         Container(
-  //           margin: EdgeInsets.all(20),
-  //           child: Table(
-  //             defaultColumnWidth: FixedColumnWidth(120.0),
-  //             border: TableBorder.all(
-  //                 color: Colors.black, style: BorderStyle.solid, width: 2),
-  //             children: [],
-  //           ),
-  //         ),
-  //       ])));
-  // }
 }
