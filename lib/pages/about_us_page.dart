@@ -139,7 +139,7 @@ class _AboutUsPage extends State<AboutUsPage> {
                         height: 1.25, fontSize: 20, color: Colors.blue[500])),
               ),
               ElevatedButton(
-                child: Text('Dr. Mirksy'),
+                child: Text('Dr. Mirsky'),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -147,11 +147,11 @@ class _AboutUsPage extends State<AboutUsPage> {
                       builder: (context) => ProfilePage(
                         profile: Profile(
                             'assets/mirsky1.jpg',
-                            'Hello, my name is Dr. Mirksy! I am the owner of Sour Notes. I love pineapples.',
-                            'Pen-Pineapple-Apple-Pen',
-                            'Pikataro',
+                            'Hello, my name is Dr. Mirsky! I am the owner of Sour Notes. I love Star Wars.',
+                            'The Imperial March',
+                            'John Williams',
                             '(309) 438 - 8945',
-                            'mirksydr@yahoo.com',
+                            'mirskydr@yahoo.com',
                             'Dr. Mirsky'),
                       ),
                     ),
