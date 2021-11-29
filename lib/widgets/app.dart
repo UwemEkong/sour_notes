@@ -68,9 +68,17 @@ class AppState extends State<App> {
         _selectTab(index);
       },
       items: _items
-          .map((e) => BottomNavigationBarItem(icon: e.icon, title: e.title))
+          .map((e) => BottomNavigationBarItem(
+              icon: e.icon, label: formatTitle(e.title.toString())))
           .toList(),
     );
+  }
+
+  String formatTitle(String title) {
+    String removeText = title.replaceAll("Text", "");
+    String removeOpenParens = removeText.replaceAll("(", "");
+    String removeCloseParens = removeOpenParens.replaceAll(")", "");
+    return removeCloseParens.replaceAll('"', '');
   }
 
   @override
