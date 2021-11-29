@@ -1,30 +1,32 @@
 package edu.ben.backend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
+import javax.persistence.*;
+
+@Entity
 @Data
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "review")
 public class Review {
-//    `idReviews` INT NOT NULL,
-//            `userID` INT NOT NULL,
-//            `content` VARCHAR(450) NULL,
-//  `rating` INT NOT NULL,
-//            `Type` VARCHAR(45) NOT NULL,
-//  `SongID` VARCHAR(45) NULL,
-//  `AlbumID` VARCHAR(45) NULL,
-//  `Favorites` INT NULL,
 
-    long id;
-    long userId;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    Long id;
+    @Column(name = "user_id")
+    Long userId;
+    @Column(name = "content")
     String content;
-    int rating;
-    long songId;
-    long albumId;
-    int favorites;
+    @Column(name = "rating")
+    Integer rating;
+    @Column(name = "song_id")
+    Long songId;
+    @Column(name = "album_id")
+    Long albumId;
+    @Column(name = "favorites")
+    Integer favorites;
 
 }

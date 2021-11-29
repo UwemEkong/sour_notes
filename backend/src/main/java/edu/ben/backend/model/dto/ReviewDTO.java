@@ -1,25 +1,23 @@
 package edu.ben.backend.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 public class ReviewDTO {
 
-    long id;
-    long userId;
+    Long id;
+    Long userId;
     String content;
-    int rating;
+    Integer rating;
     Long songId;
     Long albumId;
-    int favorites;
+    Integer favorites;
 
-    public ReviewDTO(long userId, String content, int rating, Long songId, Long albumId, int favorites) {
+    public ReviewDTO(Long userId, String content, int rating, Long songId, Long albumId, int favorites) {
         this.userId = userId;
         this.content = content;
         this.rating = rating;

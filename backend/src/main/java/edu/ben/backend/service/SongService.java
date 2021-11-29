@@ -1,6 +1,8 @@
 package edu.ben.backend.service;
 
+import edu.ben.backend.model.Song;
 import edu.ben.backend.model.dto.SongDTO;
+import edu.ben.backend.repository.SongRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -8,48 +10,31 @@ import java.util.*;
 @Service
 public class SongService {
 
-    public Map<Long, SongDTO> songTableInit =
-            Map.of(
-                    1L, new SongDTO(1L,"https://api.deezer.com/track/1109731", "Lose Yourself", "Eminem", 3),
-                    2L, new SongDTO(2L,"https://api.deezer.com/track/655877592", "3005", "Childish Gambino",5),
-                    3L, new SongDTO(3L,"https://api.deezer.com/track/448121722", "Never Gonna Give You Up", "Rick Astley", 1),
-                    4L, new SongDTO(4L,"https://api.deezer.com/track/7667065","Runaway","Kanye West", 5),
-                    5L, new SongDTO(5L,"https://api.deezer.com/track/482883032","Baby Shark", "Foozlebots", 2));
-    public HashMap<Long, SongDTO> songTable = new HashMap<Long, SongDTO>(songTableInit);
+    SongRepository songRepository;
+    public SongService(SongRepository songRepository) {
+        this.songRepository = songRepository;
+    }
 
     public List<SongDTO> getAllSongs(){
 
-        List<SongDTO> results = new ArrayList<SongDTO>();
+        List<Song> songResults = songRepository.findAll();
+        List<SongDTO> songDTOResults = new ArrayList();
 
-        for (Long key: songTable.keySet()) {
-            results.add(songTable.get(key));
+        for (Song song: songResults) {
+            songDTOResults.add(new SongDTO(song.getId(), song.getDeezerUrl(), song.getTitle(), song.getArtist(), song.getAverageRating()));
         }
-
-        return results;
-
+        return songDTOResults;
     }
 
     public List<SongDTO> searchSongs(SongDTO searchCriteria){
 
-        List<SongDTO> searchResults = new ArrayList<SongDTO>();
+        List<Song> songResults = songRepository.findAllByTitleAndArtist(searchCriteria.getTitle(), searchCriteria.getArtist());
+        List<SongDTO> songDTOResults = new ArrayList();
 
-        for (Long key: songTable.keySet()) {
-            // Match Title
-            if(songTable.get(key).getTitle().toLowerCase().contains(
-                    searchCriteria.getTitle().toLowerCase())){
-                searchResults.add(songTable.get(key));
-            }
-
-            // Match Artist
-            else if(songTable.get(key).getArtist().toLowerCase().contains(
-                    searchCriteria.getArtist().toLowerCase())){
-                searchResults.add(songTable.get(key));
-            }
-
+        for (Song song: songResults) {
+            songDTOResults.add(new SongDTO(song.getId(), song.getDeezerUrl(), song.getTitle(), song.getArtist(), song.getAverageRating()));
         }
-
-        return searchResults;
-
+        return songDTOResults;
     }
 
 }

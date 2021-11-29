@@ -25,9 +25,9 @@ public class AuthenticationService {
         } else if (!user.getPassword().equals(password)) {
             throw new IncorrectPasswordException();
         } else {
-            loggedInUser = new UserDTO(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getType());
+            loggedInUser = new UserDTO(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getFirstname(), user.getLastname(), user.getType());
             System.out.println("Get logged1 = " + loggedInUser);
-            return new UserDTO(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getType());
+            return new UserDTO(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getFirstname(), user.getLastname(), user.getType());
         }
     }
 
@@ -43,7 +43,8 @@ public class AuthenticationService {
         } else if (missingField(userDTO)) {
             throw new MissingFieldException();
         } else {
-            userRepository.createUser(userDTO);
+            System.out.println(userDTO);
+            userRepository.save(new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getEmail(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getType()));
         }
     }
 
