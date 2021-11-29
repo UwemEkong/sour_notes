@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sour_notes/models/loginmessage.dart';
 import 'package:sour_notes/models/user.dart';
-import 'package:sour_notes/routes/routes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -40,7 +39,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
       backgroundColor: Colors.greenAccent,
       appBar: AppBar(
@@ -48,7 +46,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.greenAccent,
       ),
       body: Center(
-          child: new SingleChildScrollView(
+          child: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
@@ -56,36 +54,6 @@ class _HomePageState extends State<HomePage> {
               child: Text('Welcome to SourNotes!',
                   style: TextStyle(
                       height: 1.25, fontSize: 35, color: Colors.red[500])),
-            ),
-            ElevatedButton(
-              child: Text('Login'),
-              onPressed: () {
-                Navigator.of(context).pushNamed(RouteManager.loginPage);
-              },
-            ),
-            ElevatedButton(
-              child: Text('Register'),
-              onPressed: () {
-                Navigator.of(context).pushNamed(RouteManager.loginPage);
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              child: Text('About Us'),
-              onPressed: () {
-                Navigator.of(context).pushNamed(RouteManager.aboutUsPage);
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              child: Text('Music'),
-              onPressed: () {
-                Navigator.of(context).pushNamed(RouteManager.songListPage);
-              },
             ),
             SizedBox(
               height: 20,
