@@ -10,11 +10,11 @@ public class SongService {
 
     public Map<Long, SongDTO> songTableInit =
             Map.of(
-                    1L, new SongDTO("https://api.deezer.com/track/1109731", "Lose Yourself", "Eminem", 3),
-                    2L, new SongDTO("https://api.deezer.com/track/655877592", "3005", "Childish Gambino",5),
-                    3L, new SongDTO("https://api.deezer.com/track/448121722", "Never Gonna Give You Up", "Rick Astley", 1),
-                    4L, new SongDTO("https://api.deezer.com/track/7667065","Runaway","Kanye West", 5),
-                    5L, new SongDTO("https://api.deezer.com/track/482883032","Baby Shark", "Foozlebots", 2));
+                    1L, new SongDTO(1L,"https://api.deezer.com/track/1109731", "Lose Yourself", "Eminem", 3),
+                    2L, new SongDTO(2L,"https://api.deezer.com/track/655877592", "3005", "Childish Gambino",5),
+                    3L, new SongDTO(3L,"https://api.deezer.com/track/448121722", "Never Gonna Give You Up", "Rick Astley", 1),
+                    4L, new SongDTO(4L,"https://api.deezer.com/track/7667065","Runaway","Kanye West", 5),
+                    5L, new SongDTO(5L,"https://api.deezer.com/track/482883032","Baby Shark", "Foozlebots", 2));
     public HashMap<Long, SongDTO> songTable = new HashMap<Long, SongDTO>(songTableInit);
 
     public List<SongDTO> getAllSongs(){
