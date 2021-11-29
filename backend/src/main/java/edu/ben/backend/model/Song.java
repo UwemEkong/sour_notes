@@ -1,19 +1,27 @@
 package edu.ben.backend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
+import javax.persistence.*;
+
+@Entity
 @Data
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "song")
 public class Song {
-    long id;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    Long id;
+    @Column(name = "deezer_url")
     String deezerUrl;
+    @Column(name = "title")
     String title;
+    @Column(name = "artist")
     String artist;
-    int averageRating;
-    //album title
+    @Column(name = "average_rating")
+    Integer averageRating;
 }

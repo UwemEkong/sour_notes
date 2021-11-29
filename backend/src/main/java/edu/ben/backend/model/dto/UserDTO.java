@@ -16,16 +16,17 @@ public class UserDTO {
     String email;
     String firstName;
     String lastName;
-    String Type;
+    String type;
 
     public UserDTO() {}
 
-    public UserDTO(String username, String password, String email, String firstName, String lastName) {
+    public UserDTO(String username, String password, String email, String firstName, String lastName, String Type) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.type = Type;
     }
 
 }
