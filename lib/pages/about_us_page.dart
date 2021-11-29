@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:sour_notes/models/profile.dart';
 import 'package:sour_notes/pages/profile_page.dart';
-import 'package:sour_notes/routes/routes.dart';
 
 class AboutUsPage extends StatefulWidget {
   @override
