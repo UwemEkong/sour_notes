@@ -4,6 +4,7 @@ import 'package:sour_notes/pages/about_us_page.dart';
 import 'package:sour_notes/pages/home_page.dart';
 import 'package:sour_notes/pages/login.dart';
 import 'package:sour_notes/pages/song_list.dart';
+import 'package:sour_notes/pages/user_page.dart';
 
 class App extends StatefulWidget {
   @override
@@ -23,6 +24,11 @@ class AppState extends State<App> {
         icon: const Icon(Icons.person),
         title: const Text("Login"),
         widget: const MyCustomForm(),
+        NavigationItemKey: GlobalKey<NavigatorState>()),
+    NavigationItem(
+        icon: const Icon(Icons.settings),
+        title: const Text("Profile"),
+        widget: const UserPage(),
         NavigationItemKey: GlobalKey<NavigatorState>()),
     NavigationItem(
         icon: const Icon(Icons.music_note),

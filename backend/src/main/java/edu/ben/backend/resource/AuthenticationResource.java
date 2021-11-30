@@ -28,4 +28,8 @@ public class AuthenticationResource {
     public UserDTO getLoggedInUser() {
         return this.authenticationService.getLoggedInUser();
     }
+
+    @PutMapping("/logout")
+    public void logout() {this.authenticationService.logout();}
+
 }

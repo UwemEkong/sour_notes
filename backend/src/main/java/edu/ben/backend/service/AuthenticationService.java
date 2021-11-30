@@ -64,4 +64,6 @@ public class AuthenticationService {
     public UserDTO getLoggedInUser() {
         return loggedInUser;
     }
+
+    public void logout() {loggedInUser = null;}
 }
