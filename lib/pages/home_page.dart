@@ -30,31 +30,29 @@ class _HomePageState extends State<HomePage> {
     var body = res.body;
 
     if (body.length > 1) {
-      setState(() => _fullname = "Logged in as: " +
-          json.decode(body)["firstName"] +
-          " " +
-          json.decode(body)["lastName"]);
+      setState(
+          () => _fullname = "Logged in as: " + json.decode(body)["username"]);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
-      appBar: AppBar(
-        title: Text('SourNotes'),
-        backgroundColor: Colors.greenAccent,
-      ),
+      // const color = const Color(0xFF303030);,
+      backgroundColor: Color(0xFF303030),
       body: Center(
           child: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(10),
-              child: Text('Welcome to SourNotes!',
-                  style: TextStyle(
-                      height: 1.25, fontSize: 35, color: Colors.red[500])),
-            ),
+                padding: EdgeInsets.all(10),
+                child: Text('SourNotes',
+                    style: TextStyle(
+                        fontFamily: "Trajan Pro",
+                        height: 1.25,
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white))),
             SizedBox(
               height: 20,
             ),
@@ -62,7 +60,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(10),
               child: Text(_fullname!,
                   style: TextStyle(
-                      height: 1.25, fontSize: 20, color: Colors.red[500])),
+                      height: 1.25, fontSize: 20, color: Colors.white)),
             ),
           ],
         ),

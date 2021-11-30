@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sour_notes/models/navigation_item.dart';
 import 'package:sour_notes/pages/about_us_page.dart';
+import 'package:sour_notes/pages/auth_page.dart';
 import 'package:sour_notes/pages/home_page.dart';
 import 'package:sour_notes/pages/login.dart';
 import 'package:sour_notes/pages/song_list.dart';
+
 import 'package:sour_notes/pages/song_search.dart';
+import 'package:sour_notes/pages/user_page.dart';
 
 class App extends StatefulWidget {
   @override
@@ -23,7 +26,12 @@ class AppState extends State<App> {
     NavigationItem(
         icon: const Icon(Icons.person),
         title: const Text("Login"),
-        widget: const MyCustomForm(),
+        widget: const AuthPage(),
+        NavigationItemKey: GlobalKey<NavigatorState>()),
+    NavigationItem(
+        icon: const Icon(Icons.settings),
+        title: const Text("Profile"),
+        widget: const UserPage(),
         NavigationItemKey: GlobalKey<NavigatorState>()),
     NavigationItem(
         icon: const Icon(Icons.music_note),
@@ -67,7 +75,9 @@ class AppState extends State<App> {
 
   Widget _bottomNavigationBar() {
     return BottomNavigationBar(
-      selectedItemColor: Colors.blueAccent,
+      backgroundColor: Colors.grey.shade900,
+      selectedItemColor: Colors.deepOrangeAccent[400],
+      unselectedItemColor: Colors.white,
       type: BottomNavigationBarType.fixed,
       currentIndex: _currentPage,
       onTap: (int index) {
@@ -115,4 +125,11 @@ class AppState extends State<App> {
       ),
     );
   }
+
+  // String formatTitle(String title) {
+  //   String removeText = title.replaceAll("Text", "");
+  //   String removeOpenParens = removeText.replaceAll("(", "");
+  //   String removeCloseParens = removeOpenParens.replaceAll(")", "");
+  //   return removeCloseParens.replaceAll('"', '');
+  // }
 }

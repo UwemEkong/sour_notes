@@ -13,10 +13,10 @@ class _AboutUsPage extends State<AboutUsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Color(0xFF303030),
       appBar: AppBar(
         title: Text('About Us'),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Color(0xFF303030),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -33,13 +33,15 @@ class _AboutUsPage extends State<AboutUsPage> {
                         fontWeight: FontWeight.bold,
                         height: 1.25,
                         fontSize: 25,
-                        color: Colors.red[500])),
+                        color: Colors.deepOrangeAccent[400])),
               ),
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Text('Developers:',
                     style: TextStyle(
-                        height: 1.25, fontSize: 20, color: Colors.blue[500])),
+                        height: 1.25,
+                        fontSize: 20,
+                        color: Colors.deepOrangeAccent[400])),
               ),
               ElevatedButton(
                 child: Text('Adam Chaplin'),
@@ -136,7 +138,7 @@ class _AboutUsPage extends State<AboutUsPage> {
                 padding: EdgeInsets.all(10),
                 child: Text('VIP:',
                     style: TextStyle(
-                        height: 1.25, fontSize: 20, color: Colors.blue[500])),
+                        height: 1.25, fontSize: 20, color: Colors.deepOrangeAccent[400])),
               ),
               ElevatedButton(
                 child: Text('Dr. Mirsky'),

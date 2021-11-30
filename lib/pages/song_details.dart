@@ -2,12 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:sour_notes/models/song.dart';
+import 'dart:io' show Platform;
+
 
 import 'package:flutter/material.dart';
 
 import '../models/review.dart';
 
 class SongDetailPage extends StatelessWidget {
+  bool isVisible = true;
   final Song song;
 
   SongDetailPage(this.song);
@@ -54,20 +57,40 @@ class SongDetailPage extends StatelessWidget {
     return reviews;
   }
 
+  bool admin = false;
+
+  checkUser() async {
+    var url = Platform.isAndroid
+        ? 'http://10.0.2.2:8080/api/auth/getloggedinuser'
+        : 'http://localhost:8080/api/auth/getloggedinuser';
+    var res = await http.get(Uri.parse(url));
+    var body = res.body;
+    if (body.length > 1) {
+      if (json.decode(body)["username"] == "admin") {
+        admin = true;
+      }
+      return admin;
+    }
+  }
+
+  erase() {}
+
   @override
   Widget build(BuildContext context) {
+    checkUser();
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Color(0xFF303030),
       appBar: AppBar(
         title: Text(song.title),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Color(0xFF303030),
       ),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.all(15),
+                color: Colors.white,
+                padding: EdgeInsets.all(40),
                 child: RichText(
                   text: TextSpan(
                     text: this.song.title,
@@ -94,6 +117,7 @@ class SongDetailPage extends StatelessWidget {
                 ),
               ),
               Container(
+                  color: Colors.white,
                   margin: EdgeInsets.all(20),
                   child: Column(children: [
                     RichText(
@@ -128,7 +152,30 @@ class SongDetailPage extends StatelessWidget {
                                     subtitle:
                                         Text('${snapshot.data[index].userId}'),
                                     trailing:
-                                        Text(snapshot.data[index].getNotes()),
+                                        Wrap(spacing: 5, children: <Widget>[
+                                      Text(snapshot.data[index].getNotes()),
+                                      if (admin)
+                                        IconButton(
+                                            icon: new Icon(Icons.cancel),
+                                            onPressed: () {
+                                              debugPrint('ready to delete');
+                                              ListView.builder(
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  shrinkWrap: true,
+                                                  itemCount:
+                                                      snapshot.data.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    //List tile / Song row
+                                                    return ListTile(
+                                                        title: Text(''),
+                                                        subtitle: Text(''),
+                                                        trailing: Text(''));
+                                                  });
+                                            })
+                                    ]),
                                   );
                                 });
                           }
@@ -141,3 +188,5 @@ class SongDetailPage extends StatelessWidget {
     );
   }
 }
+
+// }
