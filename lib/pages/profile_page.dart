@@ -11,10 +11,10 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Color(0xFF303030),
       appBar: AppBar(
         title: Text(profile.name),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Color(0xFF303030),
       ),
       body: Container(
         child: Center(

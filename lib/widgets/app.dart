@@ -62,7 +62,9 @@ class AppState extends State<App> {
 
   Widget _bottomNavigationBar() {
     return BottomNavigationBar(
-      selectedItemColor: Colors.blueAccent,
+      backgroundColor: Colors.grey.shade900,
+      selectedItemColor: Colors.deepOrangeAccent[400],
+      unselectedItemColor: Colors.white,
       type: BottomNavigationBarType.fixed,
       currentIndex: _currentPage,
       onTap: (int index) {
@@ -109,5 +111,12 @@ class AppState extends State<App> {
         bottomNavigationBar: _bottomNavigationBar(),
       ),
     );
+  }
+
+  String formatTitle(String title) {
+    String removeText = title.replaceAll("Text", "");
+    String removeOpenParens = removeText.replaceAll("(", "");
+    String removeCloseParens = removeOpenParens.replaceAll(")", "");
+    return removeCloseParens.replaceAll('"', '');
   }
 }
