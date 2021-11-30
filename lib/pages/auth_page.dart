@@ -10,47 +10,51 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: const Color(0xFF303030),
       appBar: AppBar(
         title: const Text('SourNotes'),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: const Color(0xFF303030),
       ),
       body: Center(
+        child: SingleChildScrollView(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.all(100),
-            child: Text('Sour Notes',
-                style: TextStyle(
-                    height: 1.25,
-                    fontSize: 40,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold)),
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const Padding(
+                padding: EdgeInsets.all(100),
+                child: Text('Sour Notes',
+                    style: TextStyle(
+                        height: 1.25,
+                        fontSize: 40,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue)),
+                child: const Text('Get Started',
+                    style: TextStyle(
+                        height: 1.25, fontSize: 20, color: Colors.white)),
+                onPressed: () => goToRegister(context),
+              ),
+              TextButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.white.withOpacity(0))),
+                child: const Text('Sign in',
+                    style: TextStyle(
+                        height: 1.25,
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+                onPressed: () => goToLogin(context),
+              ),
+            ],
           ),
-          ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
-            child: const Text('Get Started',
-                style:
-                    TextStyle(height: 1.25, fontSize: 20, color: Colors.white)),
-            onPressed: () => goToRegister(context),
-          ),
-          TextButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    Colors.white.withOpacity(0))),
-            child: const Text('Sign in',
-                style: TextStyle(
-                    height: 1.25,
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold)),
-            onPressed: () => goToLogin(context),
-          ),
-        ],
-      )),
+        ),
+      ),
     );
   }
 

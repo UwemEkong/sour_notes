@@ -72,10 +72,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: const Color(0xFF303030),
       appBar: AppBar(
         title: const Text('Sign Up'),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: const Color(0xFF303030),
       ),
       body: SingleChildScrollView(
           child: Column(
