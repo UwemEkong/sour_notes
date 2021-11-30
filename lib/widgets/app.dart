@@ -61,14 +61,17 @@ class AppState extends State<App> {
 
   Widget _bottomNavigationBar() {
     return BottomNavigationBar(
-      selectedItemColor: Colors.blueAccent,
+      backgroundColor: Colors.grey.shade900,
+      selectedItemColor: Colors.deepOrangeAccent[400],
+      unselectedItemColor: Colors.white,
       type: BottomNavigationBarType.fixed,
       currentIndex: _currentPage,
       onTap: (int index) {
         _selectTab(index);
       },
       items: _items
-          .map((e) => BottomNavigationBarItem(icon: e.icon, title: e.title))
+          .map((e) => BottomNavigationBarItem(
+              icon: e.icon, label: formatTitle(e.title.toString())))
           .toList(),
     );
   }
@@ -100,5 +103,12 @@ class AppState extends State<App> {
         bottomNavigationBar: _bottomNavigationBar(),
       ),
     );
+  }
+
+  String formatTitle(String title) {
+    String removeText = title.replaceAll("Text", "");
+    String removeOpenParens = removeText.replaceAll("(", "");
+    String removeCloseParens = removeOpenParens.replaceAll(")", "");
+    return removeCloseParens.replaceAll('"', '');
   }
 }

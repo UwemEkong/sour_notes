@@ -73,10 +73,10 @@ class _MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Color(0xFF303030),
       appBar: AppBar(
         title: const Text('SourNotes'),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Color(0xFF303030),
       ),
       body: Center(
           child: Column(

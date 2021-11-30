@@ -51,15 +51,15 @@ class _SongListPage extends State<SongListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Color(0xFF303030),
         appBar: AppBar(
-          title: Text('Music'),
-          backgroundColor: Colors.greenAccent,
+          title: Text('Music', style: TextStyle(color: Colors.white)),
+          backgroundColor: Color(0xFF303030),
         ),
         body: Center(
             child: Column(children: <Widget>[
           Container(
-              margin: EdgeInsets.all(20),
+              margin: EdgeInsets.all(10),
               child: FutureBuilder(
                   future: _getAllSongs(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -79,8 +79,21 @@ class _SongListPage extends State<SongListPage> {
                           itemBuilder: (BuildContext context, int index) {
                             //List tile / Song row
                             return ListTile(
-                              title: Text(snapshot.data[index].title),
-                              subtitle: Text(snapshot.data[index].artist),
+                              tileColor: Colors.white,
+                              title: Text(snapshot.data[index].title,
+                                  style: TextStyle(
+                                      fontFamily: "Trajan Pro",
+                                      height: 1.0,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF303030))),
+                              subtitle: Text(snapshot.data[index].artist,
+                                  style: TextStyle(
+                                      fontFamily: "Trajan Pro",
+                                      height: 1.0,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF303030))),
                               trailing: Text(snapshot.data[index].getNotes()),
                               onTap: () {
                                 //When user clicks the row/tile they go to the song's detail page
