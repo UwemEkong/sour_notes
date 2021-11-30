@@ -36,7 +36,7 @@ public class AuthenticationService {
 
         if (existingUser != null) {
             throw new DuplicateUsernameException();
-        } else if (userDTO.getPassword().length() < 8) {
+        } else if (userDTO.getPassword() == null || userDTO.getPassword().length() < 8) {
             throw new InvalidPasswordLengthException();
         } else if (!containsSpecialChar(userDTO.getPassword())) {
             throw new SpecialCharacterException();
