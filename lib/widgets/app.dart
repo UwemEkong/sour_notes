@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sour_notes/models/navigation_item.dart';
 import 'package:sour_notes/pages/about_us_page.dart';
+import 'package:sour_notes/pages/auth_page.dart';
 import 'package:sour_notes/pages/home_page.dart';
 import 'package:sour_notes/pages/login.dart';
 import 'package:sour_notes/pages/song_list.dart';
@@ -22,7 +23,7 @@ class AppState extends State<App> {
     NavigationItem(
         icon: const Icon(Icons.person),
         title: const Text("Login"),
-        widget: const MyCustomForm(),
+        widget: const AuthPage(),
         NavigationItemKey: GlobalKey<NavigatorState>()),
     NavigationItem(
         icon: const Icon(Icons.music_note),

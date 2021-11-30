@@ -7,16 +7,16 @@ import 'dart:convert';
 import 'dart:io' show Platform;
 
 // Define a custom Form widget.
-class MyCustomForm extends StatefulWidget {
-  const MyCustomForm({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _MyCustomFormState createState() => _MyCustomFormState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 // Define a corresponding State class.
 // This class holds the data related to the Form.
-class _MyCustomFormState extends State<MyCustomForm> {
+class _LoginPageState extends State<LoginPage> {
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
   String? _errorText = "";
@@ -75,7 +75,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
     return Scaffold(
       backgroundColor: Colors.greenAccent,
       appBar: AppBar(
-        title: const Text('SourNotes'),
+        title: const Text('Login'),
         backgroundColor: Colors.greenAccent,
       ),
       body: Center(
@@ -106,7 +106,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Text("Attempts left: " + "$attempts",
+            child: Text("Attempts left: " "$attempts",
                 style: TextStyle(
                     height: 1.25, fontSize: 20, color: Colors.red[500])),
           ),
@@ -118,7 +118,8 @@ class _MyCustomFormState extends State<MyCustomForm> {
           ),
           ElevatedButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.black)),
             child: Text('Login'),
             onPressed: _isEnabled
                 ? () => login(
