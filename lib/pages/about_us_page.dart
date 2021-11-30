@@ -138,7 +138,7 @@ class _AboutUsPage extends State<AboutUsPage> {
                 padding: EdgeInsets.all(10),
                 child: Text('VIP:',
                     style: TextStyle(
-                        height: 1.25, fontSize: 20, color: Colors.blue[500])),
+                        height: 1.25, fontSize: 20, color: Colors.deepOrangeAccent[400])),
               ),
               ElevatedButton(
                 child: Text('Dr. Mirsky'),
