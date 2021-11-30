@@ -28,7 +28,7 @@ public class SongService {
 
     public List<SongDTO> searchSongs(SongDTO searchCriteria){
 
-        List<Song> songResults = songRepository.findAllByTitleAndArtist(searchCriteria.getTitle(), searchCriteria.getArtist());
+        List<Song> songResults = songRepository.findAllByTitle(searchCriteria.getTitle());
         List<SongDTO> songDTOResults = new ArrayList();
 
         for (Song song: songResults) {
