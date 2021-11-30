@@ -4,6 +4,7 @@ import 'package:sour_notes/pages/about_us_page.dart';
 import 'package:sour_notes/pages/home_page.dart';
 import 'package:sour_notes/pages/login.dart';
 import 'package:sour_notes/pages/song_list.dart';
+import 'package:sour_notes/pages/song_search.dart';
 
 class App extends StatefulWidget {
   @override
@@ -28,6 +29,11 @@ class AppState extends State<App> {
         icon: const Icon(Icons.music_note),
         title: const Text("Music"),
         widget: SongListPage(),
+        NavigationItemKey: GlobalKey<NavigatorState>()),
+    NavigationItem(
+        icon: const Icon(Icons.search),
+        title: const Text("Search"),
+        widget: SongSearchPage(),
         NavigationItemKey: GlobalKey<NavigatorState>()),
     NavigationItem(
         icon: const Icon(Icons.info),
