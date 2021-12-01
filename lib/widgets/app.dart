@@ -4,9 +4,9 @@ import 'package:sour_notes/pages/about_us_page.dart';
 import 'package:sour_notes/pages/auth_page.dart';
 import 'package:sour_notes/pages/home_page.dart';
 import 'package:sour_notes/pages/login.dart';
-import 'package:sour_notes/pages/song_list.dart';
+import 'package:sour_notes/pages/music_list.dart';
 
-import 'package:sour_notes/pages/song_search.dart';
+import 'package:sour_notes/pages/music_search.dart';
 import 'package:sour_notes/pages/user_page.dart';
 
 class App extends StatefulWidget {
@@ -36,12 +36,12 @@ class AppState extends State<App> {
     NavigationItem(
         icon: const Icon(Icons.music_note),
         title: const Text("Music"),
-        widget: SongListPage(),
+        widget: MusicListPage(),
         NavigationItemKey: GlobalKey<NavigatorState>()),
     NavigationItem(
         icon: const Icon(Icons.search),
         title: const Text("Search"),
-        widget: SongSearchPage(),
+        widget: MusicSearchPage(),
         NavigationItemKey: GlobalKey<NavigatorState>()),
     NavigationItem(
         icon: const Icon(Icons.info),

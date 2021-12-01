@@ -7,17 +7,19 @@ import lombok.*;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class SongDTO {
+public class MusicDTO {
 
     long id;
     String deezerUrl;
+    boolean isSong; // otherwise album
     String title;
     String artist;
     int averageRating;
 //    String albumTitle; could be single
 
-    public SongDTO(String deezerUrl, String title, String artist, int averageRating) {
+    public MusicDTO(String deezerUrl, boolean isSong, String title, String artist, int averageRating) {
         this.deezerUrl = deezerUrl;
+        this.isSong = isSong;
         this.title = title;
         this.artist = artist;
         this.averageRating = averageRating;

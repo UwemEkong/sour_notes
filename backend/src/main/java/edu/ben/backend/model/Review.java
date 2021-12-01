@@ -22,10 +22,8 @@ public class Review {
     String content;
     @Column(name = "rating")
     Integer rating;
-    @Column(name = "song_id")
-    Long songId;
-    @Column(name = "album_id")
-    Long albumId;
+    @Column(name = "music_id")
+    Long musicId;
     @Column(name = "favorites")
     Integer favorites;
 

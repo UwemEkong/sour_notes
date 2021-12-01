@@ -38,41 +38,27 @@ CREATE TABLE IF NOT EXISTS `SourNotes`.`review` (
   `user_id` INT NOT NULL,
   `content` VARCHAR(450) NULL,
   `rating` INT NOT NULL,
-  `song_id` VARCHAR(45) NULL,
-  `album_id` VARCHAR(45) NULL,
+  `music_id` VARCHAR(45) NOT NULL,
   `favorites` INT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  UNIQUE INDEX `song_id_UNIQUE` (`song_id` ASC) VISIBLE,
-  UNIQUE INDEX `album_id_UNIQUE` (`album_id` ASC) VISIBLE)
+  UNIQUE INDEX `music_id_UNIQUE` (`music_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SourNotes`.`Song`
+-- Table `SourNotes`.`Music`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SourNotes`.`song` (
+CREATE TABLE IF NOT EXISTS `SourNotes`.`music` (
   `id` INT NOT NULL auto_increment,
   `deezer_url` VARCHAR(100) NOT NULL,
+  `is_song` BOOLEAN NOT NULL, -- otherwise album
   `title` VARCHAR(45) NOT NULL,
   `artist` VARCHAR(45) NOT NULL,
   `average_rating` DECIMAL(1) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   UNIQUE INDEX `deezer_url_UNIQUE` (`deezer_url` ASC) VISIBLE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `SourNotes`.`Album`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SourNotes`.`Album` (
-  `idAlbum` INT NOT NULL,
-  `DeezerLink` VARCHAR(100) NOT NULL,
-  `AverageRating` DECIMAL(1) NOT NULL,
-  PRIMARY KEY (`idAlbum`),
-  UNIQUE INDEX `idAlbum_UNIQUE` (`idAlbum` ASC) VISIBLE,
-  UNIQUE INDEX `DeezerLink_UNIQUE` (`DeezerLink` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 

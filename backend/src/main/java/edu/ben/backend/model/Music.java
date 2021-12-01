@@ -11,13 +11,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "song")
-public class Song {
+@Table(name = "music")
+public class Music {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     Long id;
     @Column(name = "deezer_url")
     String deezerUrl;
+    @Column(name = "is_song")
+    Boolean isSong;
     @Column(name = "title")
     String title;
     @Column(name = "artist")
