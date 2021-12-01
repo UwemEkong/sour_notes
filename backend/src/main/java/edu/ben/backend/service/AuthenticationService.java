@@ -22,7 +22,7 @@ public class AuthenticationService {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UserNotFoundException();
-        } else if (!user.getPassword().equals(password)) {
+        } else if (!(user.getPassword().equals(Integer.toString(password.hashCode())))) {
             throw new IncorrectPasswordException();
         } else {
             loggedInUser = new UserDTO(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getFirstname(), user.getLastname(), user.getType());
@@ -44,7 +44,7 @@ public class AuthenticationService {
             throw new MissingFieldException();
         } else {
             System.out.println(userDTO);
-            userRepository.save(new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getEmail(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getType()));
+            userRepository.save(new User(userDTO.getUsername(), Integer.toString(userDTO.getPassword().hashCode()), userDTO.getEmail(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getType()));
         }
     }
 
