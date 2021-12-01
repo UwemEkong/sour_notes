@@ -77,21 +77,26 @@ class _MusicSearchPage extends State<MusicSearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: const Color(0xFF303030),
         appBar: AppBar(
           title: Text('Music'),
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: const Color(0xFF303030),
         ),
         body: Center(
             child: Column(children: <Widget>[
           Column(children: <Widget>[
-            TextField(
-              controller: searchController,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Search',
-                  hintText: 'Search by Song Title'),
-            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                child: TextField(
+                  style: TextStyle(color: Colors.white),
+                  controller: searchController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Search',
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintText: 'Search by Song Title',
+                  ),
+                )),
             ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor:
@@ -127,6 +132,7 @@ class _MusicSearchPage extends State<MusicSearchPage> {
                             itemBuilder: (BuildContext context, int index) {
                               //List tile / Song row
                               return ListTile(
+                                tileColor: Colors.white,
                                 title: Text(snapshot.data[index].title),
                                 subtitle: Text(snapshot.data[index].artist),
                                 trailing: Text(snapshot.data[index].getNotes()),
