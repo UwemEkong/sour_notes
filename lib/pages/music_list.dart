@@ -1,51 +1,52 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:sour_notes/models/song.dart';
-import 'package:sour_notes/pages/song_details.dart';
+import 'package:sour_notes/models/music.dart';
+import 'package:sour_notes/pages/music_details.dart';
 
 import 'package:flutter/material.dart';
 
-class SongListPage extends StatefulWidget {
+class MusicListPage extends StatefulWidget {
   @override
-  _SongListPage createState() => _SongListPage();
+  _MusicListPage createState() => _MusicListPage();
 }
 
-class _SongListPage extends State<SongListPage> {
-  getUrlForSongsForDevice() {
+class _MusicListPage extends State<MusicListPage> {
+  getUrlForMusicForDevice() {
     if (Platform.isAndroid) {
-      return 'http://10.0.2.2:8080/api/song/';
+      return 'http://10.0.2.2:8080/api/music/';
     } else {
-      return 'http://localhost:8080/api/song/';
+      return 'http://localhost:8080/api/music/';
     }
   }
 
 //Get all songs to show on page as default, so in the backend this can maybe be changed to
 //just the first 10 songs if we have a lot
-  Future<List<Song>> _getAllSongs() async {
-    String url = getUrlForSongsForDevice() + "getAllSongs";
+  Future<List<Music>> _getAllMusic() async {
+    String url = getUrlForMusicForDevice() + "getAllMusic";
 
     var res = await http.get(Uri.parse(url));
     var body = res.body;
     print(body);
     var jsonData = json.decode(body);
 
-    List<Song> songs = [];
+    List<Music> musicList = [];
 
     for (var s in jsonData) {
-      Song song = Song(
+      Music music = Music(
           id: s["id"],
           deezerUrl: s["deezerUrl"],
+          isSong: s["song"],
           title: s["title"],
           artist: s["artist"],
           rating: s["averageRating"]);
 
-      songs.add(song);
+      musicList.add(music);
     }
 
-    print(songs);
+    print(musicList);
 
-    return songs;
+    return musicList;
   }
 
   @override
@@ -61,7 +62,7 @@ class _SongListPage extends State<SongListPage> {
           Container(
               margin: EdgeInsets.all(10),
               child: FutureBuilder(
-                  future: _getAllSongs(),
+                  future: _getAllMusic(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     // If JSON data has not arrived yet show loading
                     if (snapshot.data == null) {
@@ -100,7 +101,7 @@ class _SongListPage extends State<SongListPage> {
                                 Navigator.push(
                                     context,
                                     new MaterialPageRoute(
-                                        builder: (context) => SongDetailPage(
+                                        builder: (context) => MusicDetailPage(
                                             snapshot.data[index])));
                               },
                             );

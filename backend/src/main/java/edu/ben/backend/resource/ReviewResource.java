@@ -17,9 +17,9 @@ public class ReviewResource {
         this.reviewService = reviewService;
     }
 
-    @GetMapping(value="/getAllReviewsForSong/{songId}")
-    public List<ReviewDTO> getAllReviewsForSong(@PathVariable Long songId){
+    @GetMapping(value="/getAllReviewsForSong/{musicId}")
+    public List<ReviewDTO> getAllReviewsForSongOrAlbum(@PathVariable Long musicId){
 
-        return reviewService.getAllReviewsForSong(songId);
+        return reviewService.getAllReviewsForSongOrAlbum(musicId);
     }
 }

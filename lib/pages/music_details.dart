@@ -1,19 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:sour_notes/models/song.dart';
+import 'package:sour_notes/models/music.dart';
 import 'dart:io' show Platform;
-
 
 import 'package:flutter/material.dart';
 
 import '../models/review.dart';
 
-class SongDetailPage extends StatelessWidget {
+class MusicDetailPage extends StatelessWidget {
   bool isVisible = true;
-  final Song song;
+  final Music music;
 
-  SongDetailPage(this.song);
+  MusicDetailPage(this.music);
 
   getUrlForReviewsForDevice() {
     if (Platform.isAndroid) {
@@ -28,10 +27,10 @@ class SongDetailPage extends StatelessWidget {
   Future<List<Review>> _getAllReviews() async {
     String url = getUrlForReviewsForDevice() +
         "getAllReviewsForSong/" +
-        "${this.song.id}/";
+        "${this.music.id}/";
     print("URL");
     print(url);
-    print(this.song.id);
+    print(this.music.id);
     var res = await http.get(Uri.parse(url));
     var body = res.body;
     print(body);
@@ -81,7 +80,7 @@ class SongDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFF303030),
       appBar: AppBar(
-        title: Text(song.title),
+        title: Text(music.title),
         backgroundColor: Color(0xFF303030),
       ),
       body: Container(
@@ -93,7 +92,7 @@ class SongDetailPage extends StatelessWidget {
                 padding: EdgeInsets.all(40),
                 child: RichText(
                   text: TextSpan(
-                    text: this.song.title,
+                    text: this.music.title,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -101,13 +100,13 @@ class SongDetailPage extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                          text: '\n' + this.song.artist,
+                          text: '\n' + this.music.artist,
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 20,
                               color: Colors.black)),
                       TextSpan(
-                          text: '\n\n' + this.song.getNotes(),
+                          text: '\n\n' + this.music.getNotes(),
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 30,

@@ -18,13 +18,13 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    public List<ReviewDTO> getAllReviewsForSong(Long songId) {
+    public List<ReviewDTO> getAllReviewsForSongOrAlbum(Long musicId) {
 
-        List<Review> reviewResults = reviewRepository.findAllBySongId(songId);
+        List<Review> reviewResults = reviewRepository.findAllByMusicId(musicId);
         List<ReviewDTO> reviewDTOResults = new ArrayList();
 
         for (Review review: reviewResults) {
-            reviewDTOResults.add(new ReviewDTO(review.getId(), review.getUserId(), review.getContent(), review.getRating(), review.getSongId(), review.getAlbumId(), review.getFavorites()));
+            reviewDTOResults.add(new ReviewDTO(review.getId(), review.getUserId(), review.getContent(), review.getRating(), review.getMusicId(), review.getFavorites()));
         }
         return reviewDTOResults;
     }

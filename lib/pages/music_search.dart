@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:sour_notes/models/song.dart';
-import 'package:sour_notes/pages/song_details.dart';
+import 'package:sour_notes/models/music.dart';
+import 'package:sour_notes/pages/music_details.dart';
 
 import 'package:flutter/material.dart';
 
-class SongSearchPage extends StatefulWidget {
+class MusicSearchPage extends StatefulWidget {
   @override
-  _SongSearchPage createState() => _SongSearchPage();
+  _MusicSearchPage createState() => _MusicSearchPage();
 }
 
-class _SongSearchPage extends State<SongSearchPage> {
+class _MusicSearchPage extends State<MusicSearchPage> {
   final searchController = TextEditingController();
 
   @override
@@ -21,20 +21,20 @@ class _SongSearchPage extends State<SongSearchPage> {
     super.dispose();
   }
 
-  getUrlForSongsForDevice() {
+  getUrlForMusicForDevice() {
     if (Platform.isAndroid) {
-      return 'http://10.0.2.2:8080/api/song/';
+      return 'http://10.0.2.2:8080/api/music/';
     } else {
-      return 'http://localhost:8080/api/song/';
+      return 'http://localhost:8080/api/music/';
     }
   }
 
   rebuildSearchResultsList() {
-    _getSearchedSongs(searchController.text);
+    _getSearchedMusic(searchController.text);
   }
 
-  Future<List<Song>> _getSearchedSongs(text) async {
-    String url = getUrlForSongsForDevice() + "searchSongs";
+  Future<List<Music>> _getSearchedMusic(text) async {
+    String url = getUrlForMusicForDevice() + "searchMusic";
 
     var res = await http.post(
       Uri.parse(url),
@@ -44,6 +44,7 @@ class _SongSearchPage extends State<SongSearchPage> {
       body: jsonEncode(<String, String>{
         'rating': '5',
         'deezerUrl': text,
+        'isSong': 'true',
         'artist': text,
         'title': text,
         'id': '0'
@@ -53,57 +54,63 @@ class _SongSearchPage extends State<SongSearchPage> {
     print(body);
     var jsonData = json.decode(body);
 
-    List<Song> songs = [];
+    List<Music> musicList = [];
 
     for (var s in jsonData) {
-      Song song = Song(
+      Music music = Music(
           id: s["id"],
           deezerUrl: s["deezerUrl"],
+          isSong: s["song"],
           title: s["title"],
           artist: s["artist"],
           rating: s["averageRating"]);
 
-      songs.add(song);
+      musicList.add(music);
     }
 
-    print(songs);
+    print(musicList);
     // setState();
 
-    return songs;
+    return musicList;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: const Color(0xFF303030),
         appBar: AppBar(
           title: Text('Music'),
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: const Color(0xFF303030),
         ),
         body: Center(
             child: Column(children: <Widget>[
           Column(children: <Widget>[
-            TextField(
-              controller: searchController,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Search',
-                  hintText: 'Search by Song Title'),
-            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                child: TextField(
+                  style: TextStyle(color: Colors.white),
+                  controller: searchController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Search',
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintText: 'Search by Song Title',
+                  ),
+                )),
             ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.red)),
                 child: Text('Search'),
                 onPressed: () {
-                  _getSearchedSongs(searchController.text);
+                  _getSearchedMusic(searchController.text);
                   setState(() {});
                 })
           ]),
           Container(
               margin: EdgeInsets.all(20),
               child: FutureBuilder(
-                  future: _getSearchedSongs(searchController.text),
+                  future: _getSearchedMusic(searchController.text),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     //For reload on button click
                     if (snapshot.connectionState == ConnectionState.done) {
@@ -125,6 +132,7 @@ class _SongSearchPage extends State<SongSearchPage> {
                             itemBuilder: (BuildContext context, int index) {
                               //List tile / Song row
                               return ListTile(
+                                tileColor: Colors.white,
                                 title: Text(snapshot.data[index].title),
                                 subtitle: Text(snapshot.data[index].artist),
                                 trailing: Text(snapshot.data[index].getNotes()),
@@ -133,7 +141,7 @@ class _SongSearchPage extends State<SongSearchPage> {
                                   Navigator.push(
                                       context,
                                       new MaterialPageRoute(
-                                          builder: (context) => SongDetailPage(
+                                          builder: (context) => MusicDetailPage(
                                               snapshot.data[index])));
                                 },
                               );

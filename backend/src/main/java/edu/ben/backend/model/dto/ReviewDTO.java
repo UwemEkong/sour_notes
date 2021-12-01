@@ -13,16 +13,14 @@ public class ReviewDTO {
     Long userId;
     String content;
     Integer rating;
-    Long songId;
-    Long albumId;
+    Long musicId;
     Integer favorites;
 
-    public ReviewDTO(Long userId, String content, int rating, Long songId, Long albumId, int favorites) {
+    public ReviewDTO(Long userId, String content, int rating, Long musicId, int favorites) {
         this.userId = userId;
         this.content = content;
         this.rating = rating;
-        this.songId = songId;
-        this.albumId = albumId;
+        this.musicId = musicId;
         this.favorites = favorites;
     }
 }
