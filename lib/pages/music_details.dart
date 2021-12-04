@@ -88,33 +88,50 @@ class MusicDetailPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                color: Colors.white,
-                padding: EdgeInsets.all(40),
-                child: RichText(
-                  text: TextSpan(
-                    text: this.music.title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      color: Colors.black,
+                  color: Colors.white,
+                  padding: EdgeInsets.all(40),
+                  child: Column(children: [
+                    FutureBuilder(
+                        future: this.music.getCoverArt(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          // If JSON data has not arrived yet show loading
+                          if (snapshot.data == null) {
+                            return Container(
+                              child: Center(
+                                child: Text("Loading Image..."),
+                              ),
+                            );
+                          } else {
+                            //Once the JSON Data has arrived build the list
+                            return Image.network(snapshot.data.toString());
+                          }
+                        }),
+                    RichText(
+                      text: TextSpan(
+                        text: this.music.title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Colors.black,
+                        ),
+                        children: [
+                          TextSpan(
+                              text: '\n' + this.music.artist,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20,
+                                  color: Colors.black)),
+                          TextSpan(
+                              text: '\n\n' + this.music.getNotes(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 30,
+                                  color: Colors.black)),
+                        ],
+                      ),
                     ),
-                    children: [
-                      TextSpan(
-                          text: '\n' + this.music.artist,
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 20,
-                              color: Colors.black)),
-                      TextSpan(
-                          text: '\n\n' + this.music.getNotes(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 30,
-                              color: Colors.black)),
-                    ],
-                  ),
-                ),
-              ),
+                  ])),
               Container(
                   color: Colors.white,
                   margin: EdgeInsets.all(20),
