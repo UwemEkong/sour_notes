@@ -4,6 +4,8 @@ INSERT into sournotes.music VALUES (3, "https://api.deezer.com/track/44812172", 
 INSERT into sournotes.music VALUES (4, "https://api.deezer.com/track/7667065", true,"Runaway", "Kanye West", 5);
 INSERT into sournotes.music VALUES (5, "https://api.deezer.com/track/482883032", true, "Baby Shark", "Foozlebots", 2);
 INSERT into sournotes.music VALUES (6, "https://api.deezer.com/search?q=donda", false, "Donda", "Kanye West", 5);
+INSERT into sournotes.music VALUES (7, "https://api.deezer.com/album/213413752", false, "Above All", "Jassa Dhillon", 5);
+INSERT into sournotes.music VALUES (8, "https://api.deezer.com/search?q='moonchild era'", false, "MoonChild Era", "Diljit Dosanjh", 5);
 
 INSERT into sournotes.review VALUES (1, 1, "Lit", 5, 1, 1);
 INSERT into sournotes.review VALUES (2, 2, "So good I cant even", 5, 2, 2);

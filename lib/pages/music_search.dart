@@ -21,6 +21,9 @@ class _MusicSearchPage extends State<MusicSearchPage> {
     super.dispose();
   }
 
+// variable used to hold filter value, to show all items, just songs, or just albums
+  String displayfilter = "all";
+
   getUrlForMusicForDevice() {
     if (Platform.isAndroid) {
       return 'http://10.0.2.2:8080/api/music/';
@@ -29,11 +32,7 @@ class _MusicSearchPage extends State<MusicSearchPage> {
     }
   }
 
-  rebuildSearchResultsList() {
-    _getSearchedMusic(searchController.text);
-  }
-
-  Future<List<Music>> _getSearchedMusic(text) async {
+  Future<List<Music>> _getSearchedMusic(text, filter) async {
     String url = getUrlForMusicForDevice() + "searchMusic";
 
     var res = await http.post(
@@ -65,7 +64,13 @@ class _MusicSearchPage extends State<MusicSearchPage> {
           artist: s["artist"],
           rating: s["averageRating"]);
 
-      musicList.add(music);
+      if (music.isSong && (filter == "songs" || filter == "all")) {
+        musicList.add(music);
+      }
+
+      if (!music.isSong && (filter == "albums" || filter == "all")) {
+        musicList.add(music);
+      }
     }
 
     print(musicList);
@@ -97,20 +102,45 @@ class _MusicSearchPage extends State<MusicSearchPage> {
                     hintText: 'Search by Song Title',
                   ),
                 )),
-            ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.red)),
-                child: Text('Search'),
-                onPressed: () {
-                  _getSearchedMusic(searchController.text);
-                  setState(() {});
-                })
+            ListTile(
+              title: Row(
+                children: <Widget>[
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      child: Text('Search'),
+                      onPressed: () {
+                        this.displayfilter = "all";
+                        setState(() {});
+                      }),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      child: Text('Search Songs'),
+                      onPressed: () {
+                        this.displayfilter = "songs";
+                        setState(() {});
+                      }),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      child: Text('Search Albums'),
+                      onPressed: () {
+                        this.displayfilter = "albums";
+                        setState(() {});
+                      }),
+                ],
+              ),
+            ),
           ]),
           Container(
               margin: EdgeInsets.all(20),
               child: FutureBuilder(
-                  future: _getSearchedMusic(searchController.text),
+                  future:
+                      _getSearchedMusic(searchController.text, displayfilter),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     //For reload on button click
                     if (snapshot.connectionState == ConnectionState.done) {

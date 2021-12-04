@@ -20,9 +20,12 @@ class _MusicListPage extends State<MusicListPage> {
     }
   }
 
+// variable used to hold filter value, to show all items, just songs, or just albums
+  String displayfilter = "all";
+
 //Get all songs to show on page as default, so in the backend this can maybe be changed to
 //just the first 10 songs if we have a lot
-  Future<List<Music>> _getAllMusic() async {
+  Future<List<Music>> _getAllMusic(String filter) async {
     String url = getUrlForMusicForDevice() + "getAllMusic";
 
     var res = await http.get(Uri.parse(url));
@@ -41,7 +44,20 @@ class _MusicListPage extends State<MusicListPage> {
           artist: s["artist"],
           rating: s["averageRating"]);
 
-      musicList.add(music);
+      //filter
+
+      print("music.isSong = ${music.isSong}");
+      print("!music.isSong = ${!music.isSong}");
+
+      print("filter = ${filter}");
+
+      if (music.isSong && (filter == "songs" || filter == "all")) {
+        musicList.add(music);
+      }
+
+      if (!music.isSong && (filter == "albums" || filter == "all")) {
+        musicList.add(music);
+      }
     }
 
     print(musicList);
@@ -58,56 +74,101 @@ class _MusicListPage extends State<MusicListPage> {
           backgroundColor: Color(0xFF303030),
         ),
         body: Center(
-            child: Column(children: <Widget>[
+            child: SingleChildScrollView(
+                child: Column(children: <Widget>[
+          Column(children: <Widget>[
+            ListTile(
+              title: Row(
+                children: <Widget>[
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      child: Text('Songs'),
+                      onPressed: () {
+                        this.displayfilter = "songs";
+                        setState(() {});
+                      }),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      child: Text('Albums'),
+                      onPressed: () {
+                        this.displayfilter = "albums";
+                        setState(() {});
+                      }),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      child: Text('All'),
+                      onPressed: () {
+                        this.displayfilter = "all";
+                        setState(() {});
+                      })
+                ],
+              ),
+            ),
+          ]),
           Container(
               margin: EdgeInsets.all(10),
               child: FutureBuilder(
-                  future: _getAllMusic(),
+                  future: _getAllMusic(this.displayfilter),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    // If JSON data has not arrived yet show loading
-                    if (snapshot.data == null) {
+                    //For reload on button click
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      // If JSON data has not arrived yet show loading
+                      if (snapshot.data == null) {
+                        return Container(
+                          child: Center(
+                            child: Text("Loading..."),
+                          ),
+                        );
+                      } else {
+                        //Once the JSON Data has arrived build the list
+                        return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              //List tile / Song row
+                              return ListTile(
+                                tileColor: Colors.white,
+                                title: Text(snapshot.data[index].title,
+                                    style: TextStyle(
+                                        fontFamily: "Trajan Pro",
+                                        height: 1.0,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF303030))),
+                                subtitle: Text(snapshot.data[index].artist,
+                                    style: TextStyle(
+                                        fontFamily: "Trajan Pro",
+                                        height: 1.0,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF303030))),
+                                trailing: Text(snapshot.data[index].getNotes()),
+                                onTap: () {
+                                  //When user clicks the row/tile they go to the song's detail page
+                                  Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) => MusicDetailPage(
+                                              snapshot.data[index])));
+                                },
+                              );
+                            });
+                      }
+                    } else {
                       return Container(
                         child: Center(
                           child: Text("Loading..."),
                         ),
                       );
-                    } else {
-                      //Once the JSON Data has arrived build the list
-                      return ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            //List tile / Song row
-                            return ListTile(
-                              tileColor: Colors.white,
-                              title: Text(snapshot.data[index].title,
-                                  style: TextStyle(
-                                      fontFamily: "Trajan Pro",
-                                      height: 1.0,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF303030))),
-                              subtitle: Text(snapshot.data[index].artist,
-                                  style: TextStyle(
-                                      fontFamily: "Trajan Pro",
-                                      height: 1.0,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF303030))),
-                              trailing: Text(snapshot.data[index].getNotes()),
-                              onTap: () {
-                                //When user clicks the row/tile they go to the song's detail page
-                                Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                        builder: (context) => MusicDetailPage(
-                                            snapshot.data[index])));
-                              },
-                            );
-                          });
                     }
                   })),
-        ])));
+        ]))));
   }
 }
