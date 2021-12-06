@@ -41,8 +41,7 @@ CREATE TABLE IF NOT EXISTS `SourNotes`.`review` (
   `music_id` VARCHAR(45) NOT NULL,
   `favorites` INT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  UNIQUE INDEX `music_id_UNIQUE` (`music_id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 

@@ -27,4 +27,14 @@ public class Review {
     @Column(name = "favorites")
     Integer favorites;
 
+    public Review(Long userId, String content, Integer rating, Long musicId,
+                  Integer favorites) {
+        this.userId = userId;
+        this.content = content;
+        this.rating = rating;
+        this.musicId = musicId;
+        this.favorites = favorites;
+
+    }
+
 }
