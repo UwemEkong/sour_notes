@@ -23,6 +23,7 @@ public class MusicService {
         for (Music music: musicResults) {
             musicDTOResults.add(new MusicDTO(music.getId(), music.getDeezerUrl(), music.getIsSong(),music.getTitle(), music.getArtist(), music.getAverageRating()));
         }
+        musicDTOResults.sort(Comparator.comparing(MusicDTO::getAverageRating).reversed());
         return musicDTOResults;
     }
 
@@ -36,5 +37,6 @@ public class MusicService {
         }
         return musicDTOResults;
     }
+
 
 }
