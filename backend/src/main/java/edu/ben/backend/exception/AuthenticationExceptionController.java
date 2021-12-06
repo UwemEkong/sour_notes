@@ -38,4 +38,14 @@ public class AuthenticationExceptionController {
         return new ResponseEntity<>("All fields must be filled in", HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = MissingNumberException.class)
+    public ResponseEntity<Object> exception(MissingNumberException exception) {
+        return new ResponseEntity<>("At least 1 number is required", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = UpperCaseException.class)
+    public ResponseEntity<Object> exception(UpperCaseException exception) {
+        return new ResponseEntity<>("AT least 1 uppercase letter is required", HttpStatus.NOT_FOUND);
+    }
+
 }

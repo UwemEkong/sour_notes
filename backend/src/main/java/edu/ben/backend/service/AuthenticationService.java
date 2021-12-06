@@ -42,6 +42,11 @@ public class AuthenticationService {
             throw new SpecialCharacterException();
         } else if (missingField(userDTO)) {
             throw new MissingFieldException();
+
+        }else if(!hasUppercase(userDTO.getPassword())) {
+            throw new UpperCaseException();
+        }else if (!hasNumber(userDTO.getPassword())) {
+            throw new MissingNumberException();
         } else {
             System.out.println(userDTO);
             userRepository.save(new User(userDTO.getUsername(), Integer.toString(userDTO.getPassword().hashCode()), userDTO.getEmail(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getType()));
@@ -59,6 +64,14 @@ public class AuthenticationService {
         Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(password);
         return m.find();
+    }
+
+    private boolean hasNumber(String password) {
+        return password.matches(".*\\d.*");
+    }
+
+    private boolean hasUppercase(String password) {
+        return !password.equals(password.toLowerCase());
     }
 
     public UserDTO getLoggedInUser() {
