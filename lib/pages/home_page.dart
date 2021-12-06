@@ -35,6 +35,24 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  bool admin = false;
+  checkUser() async {
+    var test = '';
+    var url = Platform.isAndroid
+        ? 'http://10.0.2.2:8080/api/auth/getloggedinuser'
+        : 'http://localhost:8080/api/auth/getloggedinuser';
+    var res = await http.get(Uri.parse(url));
+    var body = res.body;
+    if (body.length > 1) {
+      if (json.decode(body)["username"] == "admin") {
+        return !admin;
+      } else {
+        return admin;
+      }
+    }
+    throw NullThrownError();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,18 +71,30 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 35,
                         fontWeight: FontWeight.bold,
                         color: Colors.white))),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(_fullname!,
-                  style: TextStyle(
-                      height: 1.25, fontSize: 20, color: Colors.white)),
-            ),
+            FutureBuilder(
+                future: checkUser(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    // If JSON data has not arrived yet show loading
+                    if (snapshot.data == null) {
+                      return Container(
+                        child: Center(
+                          child: Text("Loading..."),
+                        ),
+                      );
+                    } else {
+                      ElevatedButton(
+                          child: Text('See Users'), onPressed: () {});
+                    }
+                  }
+                  return ElevatedButton(
+                      child: Text('See Users'), onPressed: getUsers());
+                })
           ],
         ),
       )),
     );
   }
+
+  getUsers() {}
 }

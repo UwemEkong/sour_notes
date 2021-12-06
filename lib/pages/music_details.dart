@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:sour_notes/models/music.dart';
 import 'dart:io' show Platform;
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:flutter/material.dart';
 
@@ -11,8 +12,9 @@ import '../models/review.dart';
 class MusicDetailPage extends StatelessWidget {
   bool isVisible = true;
   final Music music;
-
+  var rating = 0;
   MusicDetailPage(this.music);
+  final postController = TextEditingController();
 
   getUrlForReviewsForDevice() {
     if (Platform.isAndroid) {
@@ -132,6 +134,38 @@ class MusicDetailPage extends StatelessWidget {
                       ),
                     ),
                   ])),
+              Text(
+                'Rate and Write a Review!',
+                style: TextStyle(fontSize: 24, color: Colors.white),
+              ),
+              RatingBar(
+                  initialRating: 0,
+                  direction: Axis.horizontal,
+                  itemCount: 5,
+                  allowHalfRating: false,
+                  ratingWidget: RatingWidget(
+                      full: Icon(Icons.music_note, color: Colors.white),
+                      empty: Icon(
+                        Icons.music_note_outlined,
+                        color: Colors.white,
+                      )),
+                  onRatingUpdate: (value) {
+                    rating = value.toInt();
+                  }),
+              Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                  child: TextField(
+                    style: TextStyle(color: Colors.white),
+                    controller: postController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Write a review...',
+                        labelStyle: TextStyle(color: Colors.white),
+                        hintText: 'Write a review..',
+                        hintStyle: TextStyle(color: Colors.white)),
+                  )),
+              ElevatedButton(
+                  child: Text('Submit Review and Rating'), onPressed: () {}),
               Container(
                   color: Colors.white,
                   margin: EdgeInsets.all(20),
