@@ -25,6 +25,8 @@ public class ReviewResource {
     }
 
 
-//    @PostMapping(value = "/postreviewForSong/{musicId}")
-//    public Review createReview(@RequestBody)
+    @PostMapping(value = "/createReview")
+    public void createReview(@RequestBody ReviewDTO reviewDTO) {
+        reviewService.createReview(reviewDTO);
+    }
 }

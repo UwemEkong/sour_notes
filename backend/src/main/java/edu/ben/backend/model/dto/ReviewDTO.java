@@ -26,6 +26,13 @@ public class ReviewDTO {
         this.favorites = favorites;
     }
 
+    public ReviewDTO(String content, int rating, Long musicId, int favorites) {
+        this.content = content;
+        this.rating = rating;
+        this.musicId = musicId;
+        this.favorites = favorites;
+    }
+
 
 
 
