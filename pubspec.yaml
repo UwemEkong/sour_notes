@@ -30,7 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-
+  comment_box: ^0.0.16
 
 
   # The following adds the Cupertino Icons font to your application.

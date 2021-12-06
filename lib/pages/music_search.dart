@@ -99,7 +99,7 @@ class _MusicSearchPage extends State<MusicSearchPage> {
                     border: OutlineInputBorder(),
                     labelText: 'Search',
                     labelStyle: TextStyle(color: Colors.white),
-                    hintText: 'Search by Song Title',
+                    hintText: 'Search by song name, album name, or artist name',
                   ),
                 )),
             ListTile(

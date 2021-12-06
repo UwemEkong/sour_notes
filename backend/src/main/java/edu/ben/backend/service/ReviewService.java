@@ -5,15 +5,12 @@ import edu.ben.backend.model.dto.ReviewDTO;
 import edu.ben.backend.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ReviewService {
-
     ReviewRepository reviewRepository;
+
     public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
     }
@@ -22,11 +19,12 @@ public class ReviewService {
 
         List<Review> reviewResults = reviewRepository.findAllByMusicId(musicId);
         List<ReviewDTO> reviewDTOResults = new ArrayList();
-
         for (Review review: reviewResults) {
             reviewDTOResults.add(new ReviewDTO(review.getId(), review.getUserId(), review.getContent(), review.getRating(), review.getMusicId(), review.getFavorites()));
         }
+
         return reviewDTOResults;
     }
 
 }
+

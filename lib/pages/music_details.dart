@@ -7,11 +7,13 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 
 import '../models/review.dart';
+import '../widgets/form_input.dart';
 
 class MusicDetailPage extends StatelessWidget {
   bool isVisible = true;
   final Music music;
 
+  final postController = TextEditingController();
   MusicDetailPage(this.music);
 
   getUrlForReviewsForDevice() {
@@ -21,6 +23,8 @@ class MusicDetailPage extends StatelessWidget {
       return 'http://localhost:8080/api/review/';
     }
   }
+
+  createPost(String post) async {}
 
 //Get all songs to show on page as default, so in the backend this can maybe be changed to
 //just the first 10 songs if we have a lot
@@ -197,6 +201,16 @@ class MusicDetailPage extends StatelessWidget {
                           }
                         })
                   ])),
+              FormInput(
+                  postController, 'Write a review...', 'Write a review...'),
+              ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.black)),
+                  child: Text('Post'),
+                  onPressed: () => createPost(
+                        postController.text,
+                      ))
             ],
           ),
         ),

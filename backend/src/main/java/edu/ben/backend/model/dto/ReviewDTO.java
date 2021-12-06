@@ -2,6 +2,8 @@ package edu.ben.backend.model.dto;
 
 import lombok.*;
 
+import java.util.Comparator;
+
 @Data
 @ToString
 @EqualsAndHashCode
@@ -23,4 +25,8 @@ public class ReviewDTO {
         this.musicId = musicId;
         this.favorites = favorites;
     }
+
+
+
+
 }
