@@ -1,4 +1,5 @@
 package edu.ben.backend.service;
+
 import edu.ben.backend.exception.*;
 import edu.ben.backend.model.User;
 import edu.ben.backend.model.dto.UserDTO;
@@ -43,9 +44,9 @@ public class AuthenticationService {
         } else if (missingField(userDTO)) {
             throw new MissingFieldException();
 
-        }else if(!hasUppercase(userDTO.getPassword())) {
+        } else if (!hasUppercase(userDTO.getPassword())) {
             throw new UpperCaseException();
-        }else if (!hasNumber(userDTO.getPassword())) {
+        } else if (!hasNumber(userDTO.getPassword())) {
             throw new MissingNumberException();
         } else {
             System.out.println(userDTO);
@@ -53,18 +54,34 @@ public class AuthenticationService {
         }
     }
 
+    public void changePassword(UserDTO userDTO) {
 
-    public void update(UserDTO userDTO) {
+        if (userDTO.getPassword() == null || userDTO.getPassword().length() < 8) {
+            throw new InvalidPasswordLengthException();
+        } else if (!containsSpecialChar(userDTO.getPassword())) {
+            throw new SpecialCharacterException();
+        }  else if (!hasUppercase(userDTO.getPassword())) {
+            throw new UpperCaseException();
+        } else if (!hasNumber(userDTO.getPassword())) {
+            throw new MissingNumberException();
+        }
+
+
         User user = userRepository.findByUsername(userDTO.getUsername());
-        User user2 = new User(user.getId(), user.getUsername(), Integer.toString(userDTO.getPassword().hashCode()), userDTO.getEmail(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getType());
+        loggedInUser = new UserDTO(user.getId(), user.getUsername(), Integer.toString(userDTO.getPassword().hashCode()), user.getEmail(), user.getFirstname(), user.getLastname(), user.getType());
+
+        User user2 = new User(loggedInUser.getId(), loggedInUser.getUsername(), Integer.toString(userDTO.getPassword().hashCode()), loggedInUser.getEmail(), loggedInUser.getFirstName(), loggedInUser.getLastName(), loggedInUser.getType());
         userRepository.save(user2);
-
-        loggedInUser = new UserDTO(user2.getId(), user2.getUsername(), user2.getPassword(), user2.getEmail(), user2.getFirstname(), user2.getLastname(), user2.getType());
-
 
     }
 
+    public void updateDetails(UserDTO userDTO) {
+        User user = userRepository.findByUsername(userDTO.getUsername());
+        User user2 = new User(user.getId(), user.getUsername(), user.getPassword(), userDTO.getEmail(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getType());
+        userRepository.save(user2);
 
+        loggedInUser = new UserDTO(user2.getId(), user2.getUsername(), user2.getPassword(), user2.getEmail(), user2.getFirstname(), user2.getLastname(), user2.getType());
+    }
 
 
     private boolean missingField(UserDTO userDTO) {

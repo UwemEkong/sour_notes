@@ -35,10 +35,18 @@ public class AuthenticationResource {
     }
 
 
-    @PostMapping("/update")
-    public void updateEmployee(@RequestBody UserDTO userDTO) {
-        this.authenticationService.update(userDTO);
+    @PostMapping("/updateDetails")
+    public void updateEmployeeDetails(@RequestBody UserDTO userDTO) {
+        this.authenticationService.updateDetails(userDTO);
     }
+
+
+    @PostMapping("/changePassword")
+    public void changeEmployeePassword(@RequestBody UserDTO userDTO) {
+        this.authenticationService.changePassword(userDTO);
+    }
+
+
 
 
 }

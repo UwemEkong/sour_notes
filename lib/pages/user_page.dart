@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:sour_notes/pages/change_details.dart';
+import 'package:sour_notes/pages/update_details.dart';
+import 'change_password.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _UserPage extends State<UserPage> {
     _getUserData();
     build(context);
     timer =
-        Timer.periodic(Duration(seconds: 1), (Timer t) => _getUserData());
+        Timer.periodic(const Duration(seconds: 3), (Timer t) => _getUserData());
   }
 
   @override
@@ -131,8 +132,12 @@ class _UserPage extends State<UserPage> {
                 ),
               ),
               ElevatedButton(
-                child:   Text('Change Details'),
-                onPressed: () => goToChangeDetails(context),
+                child:   Text('Update Details'),
+                onPressed: () => goToUpdateDetails(context),
+              ),
+              ElevatedButton(
+                child:   Text('Change Password'),
+                onPressed: () => goToChangePassword(context),
               ),
               ElevatedButton(
                 child:   Text('Log Out'),
@@ -147,25 +152,25 @@ class _UserPage extends State<UserPage> {
     );
   }
 
-  goToChangeDetails(BuildContext context) {
+  goToUpdateDetails(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ChangeDetailsPage(),
+        builder: (context) => UpdateDetailsPage(),
       ),
     );
   }
 
-  // reload() async {
-  //   // setState(() => userName = '');
-  //   // setState(() => password = '');
-  //   // setState(() => email = '');
-  //   // setState(() => firstName = '');
-  //   // setState(() => lastName = '');
-  //   _getUserData();
-  //
-  //
-  // }
+  goToChangePassword(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangePasswordPage(),
+      ),
+    );
+  }
+
+
 }
 
 
