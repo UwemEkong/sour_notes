@@ -8,6 +8,8 @@ import 'package:sour_notes/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:sour_notes/pages/admin.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -37,7 +39,6 @@ class _HomePageState extends State<HomePage> {
 
   bool admin = false;
   checkUser() async {
-    var test = '';
     var url = Platform.isAndroid
         ? 'http://10.0.2.2:8080/api/auth/getloggedinuser'
         : 'http://localhost:8080/api/auth/getloggedinuser';
@@ -45,16 +46,15 @@ class _HomePageState extends State<HomePage> {
     var body = res.body;
     if (body.length > 1) {
       if (json.decode(body)["username"] == "admin") {
-        return !admin;
-      } else {
-        return admin;
+        admin = true;
       }
+      return admin;
     }
-    throw NullThrownError();
   }
 
   @override
   Widget build(BuildContext context) {
+    checkUser();
     return Scaffold(
       // const color = const Color(0xFF303030);,
       backgroundColor: Color(0xFF303030),
@@ -71,25 +71,16 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 35,
                         fontWeight: FontWeight.bold,
                         color: Colors.white))),
-            FutureBuilder(
-                future: checkUser(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    // If JSON data has not arrived yet show loading
-                    if (snapshot.data == null) {
-                      return Container(
-                        child: Center(
-                          child: Text("Loading..."),
-                        ),
-                      );
-                    } else {
-                      ElevatedButton(
-                          child: Text('See Users'), onPressed: () {});
-                    }
-                  }
-                  return ElevatedButton(
-                      child: Text('See Users'), onPressed: getUsers());
-                })
+            if (admin)
+              Container(
+                  child: ElevatedButton(
+                      child: Text('See Users'),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => adminPage()));
+                      }))
           ],
         ),
       )),
