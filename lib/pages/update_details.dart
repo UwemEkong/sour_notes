@@ -4,14 +4,14 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 
-class ChangeDetailsPage extends StatefulWidget {
-  const ChangeDetailsPage({Key? key}) : super(key: key);
+class UpdateDetailsPage extends StatefulWidget {
+  const UpdateDetailsPage({Key? key}) : super(key: key);
 
   @override
-  _ChangeDetailsPageState createState() => _ChangeDetailsPageState();
+  _UpdateDetailsPageState createState() => _UpdateDetailsPageState();
 }
 
-class _ChangeDetailsPageState extends State<ChangeDetailsPage> {
+class _UpdateDetailsPageState extends State<UpdateDetailsPage> {
 
   String? _errorText = "";
   int? attempts = 5;
@@ -19,7 +19,6 @@ class _ChangeDetailsPageState extends State<ChangeDetailsPage> {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -28,12 +27,10 @@ class _ChangeDetailsPageState extends State<ChangeDetailsPage> {
 
   @override
   void dispose() {
-    passwordController.dispose();
     super.dispose();
   }
 
-  update(String firstName, String lastName, String email,
-      String password, BuildContext context) async {
+  update(String firstName, String lastName, String email, BuildContext context) async {
 
     // Get current userName
     String? CurrentUserName = "";
@@ -56,7 +53,6 @@ class _ChangeDetailsPageState extends State<ChangeDetailsPage> {
       },
       body: jsonEncode(<String, String>{
         'username': CurrentUserName!,
-        'password': password,
         'email': email,
         'firstName': firstName,
         'lastName': lastName,
@@ -73,9 +69,9 @@ class _ChangeDetailsPageState extends State<ChangeDetailsPage> {
 
   String getUrlForDevice() {
     if (Platform.isAndroid) {
-      return 'http://10.0.2.2:8080/api/auth/update';
+      return 'http://10.0.2.2:8080/api/auth/updateDetails';
     } else {
-      return 'http://localhost:8080/api/auth/update';
+      return 'http://localhost:8080/api/auth/updateDetails';
     }
   }
 
@@ -94,8 +90,7 @@ class _ChangeDetailsPageState extends State<ChangeDetailsPage> {
         children: <Widget>[
           FormInput(firstNameController, 'First Name', 'Enter First Name'),
           FormInput(lastNameController, 'Last Name', 'Enter Last Name'),
-          FormInput(emailController, 'Email', 'Enter valid email'),
-          FormInput(passwordController, 'Password', 'Enter password'),
+          FormInput(emailController, 'Email', 'Enter Email'),
           Padding(
             padding: EdgeInsets.all(10),
             child: Text(_errorText!,
@@ -111,7 +106,6 @@ class _ChangeDetailsPageState extends State<ChangeDetailsPage> {
                 firstNameController.text,
                 lastNameController.text,
                 emailController.text,
-                passwordController.text,
                 context),
           ),
         ],
