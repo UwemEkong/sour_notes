@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:sour_notes/pages/change_details.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _UserPage extends State<UserPage> {
     _getUserData();
     build(context);
     timer =
-        Timer.periodic(const Duration(seconds: 1), (Timer t) => _getUserData());
+        Timer.periodic(Duration(seconds: 1), (Timer t) => _getUserData());
   }
 
   @override
@@ -63,6 +64,14 @@ class _UserPage extends State<UserPage> {
     setState(() => lastName = '');
   }
 
+  _reload() async {
+    setState(() => userName = '');
+    setState(() => password = '');
+    setState(() => email = '');
+    setState(() => firstName = '');
+    setState(() => lastName = '');
+  }
+
   @override
   Widget build(BuildContext context) {
     _getUserData();
@@ -76,12 +85,18 @@ class _UserPage extends State<UserPage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              ElevatedButton(
+                child:  Text('Reload'),
+                onPressed: () {
+                  _getUserData();
+                },
+              ),
               Container(
                 padding: EdgeInsets.all(15),
                 child: RichText(
                   text: TextSpan(
                     text: 'UserName: ' + userName!,
-                    style: const TextStyle(
+                    style:   TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
                       color: Colors.white,
@@ -89,25 +104,25 @@ class _UserPage extends State<UserPage> {
                     children: [
                       TextSpan(
                           text: '\nPassword: ' + password!,
-                          style: const TextStyle(
+                          style:   TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
                               color: Colors.white)),
                       TextSpan(
                           text: '\nE-Mail: ' + email!,
-                          style: const TextStyle(
+                          style:   TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
                               color: Colors.white)),
                       TextSpan(
                           text: '\nFirst Name: ' + firstName!,
-                          style: const TextStyle(
+                          style:   TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
                               color: Colors.white)),
                       TextSpan(
                           text: '\nLast Name: ' + lastName!,
-                          style: const TextStyle(
+                          style:   TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
                               color: Colors.white)),
@@ -116,7 +131,11 @@ class _UserPage extends State<UserPage> {
                 ),
               ),
               ElevatedButton(
-                child: const Text('Log Out'),
+                child:   Text('Change Details'),
+                onPressed: () => goToChangeDetails(context),
+              ),
+              ElevatedButton(
+                child:   Text('Log Out'),
                 onPressed: () {
                   _logout();
                 },
@@ -127,4 +146,28 @@ class _UserPage extends State<UserPage> {
       ),
     );
   }
+
+  goToChangeDetails(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeDetailsPage(),
+      ),
+    );
+  }
+
+  // reload() async {
+  //   // setState(() => userName = '');
+  //   // setState(() => password = '');
+  //   // setState(() => email = '');
+  //   // setState(() => firstName = '');
+  //   // setState(() => lastName = '');
+  //   _getUserData();
+  //
+  //
+  // }
 }
+
+
+
+
