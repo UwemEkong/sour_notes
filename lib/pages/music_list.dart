@@ -12,6 +12,9 @@ class MusicListPage extends StatefulWidget {
 }
 
 class _MusicListPage extends State<MusicListPage> {
+  bool highlight = false;
+  String sortBy = "rating";
+
   getUrlForMusicForDevice() {
     if (Platform.isAndroid) {
       return 'http://10.0.2.2:8080/api/music/';
@@ -20,13 +23,27 @@ class _MusicListPage extends State<MusicListPage> {
     }
   }
 
+  sortByRating() {
+    setState(() {
+      highlight = !highlight;
+      sortBy = "rating";
+    });
+  }
+
+  sortByPop() {
+    setState(() {
+      highlight = !highlight;
+      sortBy = "popularity";
+    });
+  }
+
 // variable used to hold filter value, to show all items, just songs, or just albums
   String displayfilter = "all";
 
 //Get all songs to show on page as default, so in the backend this can maybe be changed to
 //just the first 10 songs if we have a lot
   Future<List<Music>> _getAllMusic(String filter) async {
-    String url = getUrlForMusicForDevice() + "getAllMusic";
+    String url = getUrlForMusicForDevice() + "getAllMusic/" + sortBy;
 
     var res = await http.get(Uri.parse(url));
     var body = res.body;
@@ -80,33 +97,64 @@ class _MusicListPage extends State<MusicListPage> {
             ListTile(
               title: Row(
                 children: <Widget>[
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.red)),
-                      child: Text('Songs'),
-                      onPressed: () {
-                        this.displayfilter = "songs";
-                        setState(() {});
-                      }),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.red)),
-                      child: Text('Albums'),
-                      onPressed: () {
-                        this.displayfilter = "albums";
-                        setState(() {});
-                      }),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.red)),
-                      child: Text('All'),
-                      onPressed: () {
-                        this.displayfilter = "all";
-                        setState(() {});
-                      })
+                  Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.red)),
+                          child: Text('Songs'),
+                          onPressed: () {
+                            this.displayfilter = "songs";
+                            setState(() {});
+                          })),
+                  Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.red)),
+                          child: Text('Albums'),
+                          onPressed: () {
+                            this.displayfilter = "albums";
+                            setState(() {});
+                          })),
+                  Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.red)),
+                          child: Text('All'),
+                          onPressed: () {
+                            this.displayfilter = "all";
+                            setState(() {});
+                          }))
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Wrap(
+                spacing: 12, // space between two icons
+                children: <Widget>[
+                  TextButton.icon(
+                    onPressed: () => sortByRating(),
+                    label: Text("Sort by rating",
+                        style: TextStyle(
+                            color: highlight ? Colors.white : Colors.red,
+                            fontSize: 16.0)),
+                    icon: Icon(Icons.sort,
+                        color: highlight ? Colors.white : Colors.red),
+                  ),
+                  TextButton.icon(
+                    onPressed: () => sortByPop(),
+                    label: Text("Sort by popularity",
+                        style: TextStyle(
+                            color: highlight ? Colors.red : Colors.white,
+                            fontSize: 16.0)),
+                    icon: Icon(Icons.sort,
+                        color: highlight ? Colors.red : Colors.white),
+                  ),
                 ],
               ),
             ),

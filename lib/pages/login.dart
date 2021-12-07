@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sour_notes/models/loginmessage.dart';
 import 'package:sour_notes/pages/home_page.dart';
+import 'package:sour_notes/widgets/form_input.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -83,27 +84,8 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: TextField(
-              controller: userNameController,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'User Name',
-                  hintText: 'Enter valid user name or email'),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                  hintText: 'Enter password'),
-            ),
-          ),
+          FormInput(userNameController, 'Username', 'Enter Valid Username'),
+          FormInput(passwordController, 'Password', 'Enter Password'),
           Padding(
             padding: EdgeInsets.all(10),
             child: Text("Attempts left: " "$attempts",
