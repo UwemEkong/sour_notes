@@ -33,4 +33,12 @@ public class AuthenticationResource {
     public void logout() {
         this.authenticationService.logout();
     }
+
+
+    @PostMapping("/update")
+    public void updateEmployee(@RequestBody UserDTO userDTO) {
+        this.authenticationService.update(userDTO);
+    }
+
+
 }

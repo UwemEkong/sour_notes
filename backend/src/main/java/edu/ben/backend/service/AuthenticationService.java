@@ -53,6 +53,20 @@ public class AuthenticationService {
         }
     }
 
+
+    public void update(UserDTO userDTO) {
+        User user = userRepository.findByUsername(userDTO.getUsername());
+        User user2 = new User(user.getId(), user.getUsername(), Integer.toString(userDTO.getPassword().hashCode()), userDTO.getEmail(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getType());
+        userRepository.save(user2);
+
+        loggedInUser = new UserDTO(user2.getId(), user2.getUsername(), user2.getPassword(), user2.getEmail(), user2.getFirstname(), user2.getLastname(), user2.getType());
+
+
+    }
+
+
+
+
     private boolean missingField(UserDTO userDTO) {
         if (userDTO.getUsername().equals("") || userDTO.getEmail().equals("") || userDTO.getFirstName().equals("") || userDTO.getLastName().equals("") || userDTO.getPassword().equals("")) {
             return true;
