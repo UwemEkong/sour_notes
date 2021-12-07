@@ -19,9 +19,12 @@ class _FormInputState extends State<FormInput> {
     return Padding(
       padding: EdgeInsets.all(10),
       child: TextField(
+        style: TextStyle(color: Colors.black),
         controller: widget.userNameController,
         obscureText: widget.labelTextContent == "Password" ? true : false,
         decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
             border: const OutlineInputBorder(),
             labelText: widget.labelTextContent,
             hintText: widget.hintText),
