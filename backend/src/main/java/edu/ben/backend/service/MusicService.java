@@ -56,6 +56,18 @@ public class MusicService {
         Collections.sort(musicDTOResults, new MapComparator(numReviews));
     }
 
+    public List<MusicDTO> getSongsOnly() {
+        List<Music> allMusic = musicRepository.findAll();
+        List<MusicDTO> songList = new ArrayList();
+
+        for (Music music : allMusic) {
+            if (music.getIsSong()) {
+                songList.add(new MusicDTO(music.getId(), music.getDeezerUrl(), music.getIsSong(),music.getTitle(), music.getArtist(), music.getAverageRating()));
+            }
+        }
+        return songList;
+    }
+
     class MapComparator implements Comparator<MusicDTO> {
 
         HashMap<Long, Integer> map;

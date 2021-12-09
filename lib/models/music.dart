@@ -9,7 +9,7 @@ class Music {
   String title;
   String artist;
   int rating;
-
+  static String imageUrl = "";
   Music({
     required this.id,
     required this.deezerUrl,
@@ -26,7 +26,7 @@ class Music {
   Future<String> getCoverArt() async {
     var res = await http.get(Uri.parse(this.deezerUrl));
     var body = res.body;
-    print(body);
+    // print(body);
     var jsonData = json.decode(body);
 
 // Only albums have covers
@@ -39,5 +39,15 @@ class Music {
     }
 
     return jsonData["album"]["cover"];
+  }
+
+  Future<String> getAudio() async {
+    var res = await http.get(Uri.parse(this.deezerUrl));
+    var body = res.body;
+    var jsonData = json.decode(body);
+
+// Only albums have covers
+
+    return jsonData["preview"];
   }
 }
