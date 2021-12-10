@@ -53,6 +53,26 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
     }
   }
 
+  Future<List<String>> _getAllSongsUnderAlbum() async {
+    String url = this.widget.music.deezerUrl;
+
+    var res = await http.get(Uri.parse(url));
+    var body = res.body;
+    var jsonData = json.decode(body);
+
+    List<String> songNames = [];
+
+    if (this.widget.music.isSong) {
+      return songNames;
+    }
+
+    for (var s in jsonData["tracks"]["data"]) {
+      songNames.add(s["title"]);
+    }
+
+    return songNames;
+  }
+
 //Get all songs to show on page as default, so in the backend this can maybe be changed to
   Future<List<Review>> _getAllReviews() async {
     String url = getUrlForReviewsForDevice() +
@@ -121,6 +141,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                   color: Colors.white,
                   padding: EdgeInsets.all(40),
                   child: Column(children: [
+                    //Cover Art
                     FutureBuilder(
                         future: this.widget.music.getCoverArt(),
                         builder:
@@ -161,6 +182,32 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                         ],
                       ),
                     ),
+                    //Songs under Album
+                    FutureBuilder(
+                        future: _getAllSongsUnderAlbum(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          // If JSON data has not arrived yet show loading
+                          if (snapshot.data == null) {
+                            return Container(
+                              child: Center(
+                                child: Text("Loading..."),
+                              ),
+                            );
+                          } else {
+                            //Once the JSON Data has arrived build the list
+                            return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  //List tile / Song row
+                                  return ListTile(
+                                    title: Text(snapshot.data[index]),
+                                  );
+                                });
+                          }
+                        }),
                   ])),
               Text(
                 'Rate and Write a Review!',
@@ -195,6 +242,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
               ElevatedButton(
                   child: Text('Submit Review and Rating'),
                   onPressed: () => createReview()),
+              /////THIS IS WHERE THE LIST OF SONGS UNDER THE ALBUM WILL APPEAR
               Container(
                   color: Colors.white,
                   margin: EdgeInsets.all(20),
