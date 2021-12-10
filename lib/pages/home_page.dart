@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
         // const color = const Color(0xFF303030);,
         backgroundColor: Color(0xFF303030),
         body: SingleChildScrollView(
-            padding: EdgeInsets.fromLTRB(40, 10, 40, 0),
+            padding: EdgeInsets.fromLTRB(60, 10, 60, 0),
             child: Column(children: <Widget>[
               Header(),
               Container(
