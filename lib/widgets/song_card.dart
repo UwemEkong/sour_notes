@@ -55,11 +55,11 @@ class _SongCardState extends State<SongCard> {
                         widget.snapshot.data[widget.index].rating);
                   })),
           Padding(
-            padding: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: IconButton(
               icon: isPlaying
-                  ? Icon(Icons.pause, color: Colors.blue, size: 40.0)
-                  : Icon(Icons.play_arrow, color: Colors.blue, size: 40.0),
+                  ? Icon(Icons.pause, color: Colors.blue, size: 50.0)
+                  : Icon(Icons.play_arrow, color: Colors.blue, size: 50.0),
               onPressed: () => playAudio(widget.snapshot.data[widget.index]),
             ),
           ),
@@ -71,9 +71,8 @@ class _SongCardState extends State<SongCard> {
   playAudio(data) async {
     isPlaying = !isPlaying;
     setState(() {});
-    Type type = data.runtimeType;
-    var duration = await player.setUrl(await data.getAudio());
-    await player.setVolume(5);
+    await player.setUrl(await data.getAudio());
+    // print(await "AUDIO: " + data.getAudio());
     if (player.playing) {
       player.stop();
     } else {

@@ -19,16 +19,6 @@ class CustomText extends StatelessWidget {
           text: TextSpan(
             style: DefaultTextStyle.of(context).style,
             children: <TextSpan>[
-              if (type != "")
-                TextSpan(
-                    text: type,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontFamily: "Trajan Pro",
-                      height: 1.0,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    )),
               TextSpan(
                   text: content,
                   style: const TextStyle(

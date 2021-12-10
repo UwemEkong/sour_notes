@@ -65,6 +65,7 @@ public class MusicService {
                 songList.add(new MusicDTO(music.getId(), music.getDeezerUrl(), music.getIsSong(),music.getTitle(), music.getArtist(), music.getAverageRating()));
             }
         }
+        songList.sort(Comparator.comparing(MusicDTO::getAverageRating).reversed());
         return songList;
     }
 
