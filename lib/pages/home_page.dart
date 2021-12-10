@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:sour_notes/widgets/header.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:sour_notes/widgets/song_card.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -100,90 +101,41 @@ class _HomePageState extends State<HomePage> {
         // const color = const Color(0xFF303030);,
         backgroundColor: Color(0xFF303030),
         body: SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(40, 10, 40, 0),
             child: Column(children: <Widget>[
-          Header(),
-          Container(
-              child: FutureBuilder(
-                  future: _getAllSongs(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    //For reload on button click
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      // If JSON data has not arrived yet show loading
-                      if (snapshot.data == null) {
-                        return Container(
-                          child: Center(
-                            child: Text("Loading..."),
-                          ),
-                        );
-                      } else {
-                        //Once the JSON Data has arrived build the list
-                        return ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              //List tile / Song row
-                              return Column(children: <Widget>[
-                                FutureBuilder(
-                                    future: snapshot.data[index]
-                                        .getCoverArt()
-                                        .then((String result) {
-                                      print(result);
-                                      return result;
-                                    }),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      // If JSON data has not arrived yet show loading
-                                      if (snapshot.data == null) {
-                                        return Container(
-                                          child: Center(
-                                            child: Text("Loading Image..."),
-                                          ),
-                                        );
-                                      } else {
-                                        //Once the JSON Data has arrived build the list
-                                        return Image.network(
-                                          snapshot.data.toString(),
-                                        );
-                                      }
-                                    }),
-                                Text(snapshot.data[index].title,
-                                    style: TextStyle(
-                                        fontFamily: "Trajan Pro",
-                                        height: 1.0,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                                IconButton(
-                                  icon: Icon(Icons.play_arrow),
-                                  onPressed: () =>
-                                      playAudio(snapshot.data[index]),
-                                ),
-                              ]);
-                            });
-                      }
-                    } else {
-                      return Container(
-                        child: Center(
-                          child: Text("Loading..."),
-                        ),
-                      );
-                    }
-                  }))
-        ])));
+              Header(),
+              Container(
+                  child: FutureBuilder(
+                      future: _getAllSongs(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        //For reload on button click
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          // If JSON data has not arrived yet show loading
+                          if (snapshot.data == null) {
+                            return Container(
+                              child: Center(
+                                child: Text("Loading..."),
+                              ),
+                            );
+                          } else {
+                            //Once the JSON Data has arrived build the list
+                            return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  //List tile / Song row
+                                  return SongCard(snapshot, index);
+                                });
+                          }
+                        } else {
+                          return Container(
+                            child: Center(
+                              child: Text("Loading..."),
+                            ),
+                          );
+                        }
+                      }))
+            ])));
   }
-
-  final player = AudioPlayer();
-  playAudio(data) async {
-    Type type = data.runtimeType;
-    var duration = await player.setUrl(await data.getAudio());
-    await player.setVolume(10);
-    if (player.playing) {
-      player.stop();
-    } else {
-      player.play();
-    }
-  }
-
-  // getUsers() {}
 }
