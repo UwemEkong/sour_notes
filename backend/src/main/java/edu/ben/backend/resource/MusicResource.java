@@ -15,10 +15,10 @@ public class MusicResource {
         this.musicService = musicService;
     }
 
-    @GetMapping(value="/getAllMusic")
-    public List<MusicDTO> getAllMusic(){
+    @GetMapping(value="/getAllMusic/{sortBy}")
+    public List<MusicDTO> getAllMusic(@PathVariable String sortBy){
 
-        return musicService.getAllMusic();
+        return musicService.getAllMusic(sortBy);
     }
 
     @PostMapping(value="/searchMusic")

@@ -9,6 +9,8 @@ import 'package:sour_notes/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:sour_notes/pages/users_details.dart';
+
 class adminPage extends StatefulWidget {
   @override
   _adminPageState createState() => _adminPageState();
@@ -102,8 +104,8 @@ class _adminPageState extends State<adminPage> {
                               Navigator.push(
                                   context,
                                   new MaterialPageRoute(
-                                      builder: (context) =>
-                                          (snapshot.data[index])));
+                                      builder: (context) => adminDetailsPage(
+                                          (snapshot.data[index]))));
                             },
                           );
                         });
