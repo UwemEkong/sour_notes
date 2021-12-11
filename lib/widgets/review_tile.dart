@@ -10,41 +10,6 @@ class ReviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Column(children: <Widget>[
-    //   ListTile(
-    //     title: Text(snapshot.data[index].content),
-    //     subtitle: Text('Favorites: ' + '${snapshot.data[index].favorites}'),
-    //     trailing: Wrap(spacing: 5, children: <Widget>[
-    //       Text(snapshot.data[index].getNotes()),
-    //       if (admin)
-    //         IconButton(
-    //             icon: new Icon(Icons.cancel),
-    //             onPressed: () {
-    //               debugPrint('ready to delete');
-    //               ListView.builder(
-    //                   scrollDirection: Axis.vertical,
-    //                   shrinkWrap: true,
-    //                   itemCount: snapshot.data.length,
-    //                   itemBuilder: (BuildContext context, int index) {
-    //                     //List tile / Song row
-    //                     return ListTile(
-    //                         title: Text(''),
-    //                         subtitle: Text(''),
-    //                         trailing: Text(''));
-    //                   });
-    //             })
-    //     ]),
-    //   ),
-    //   Row(children: <Widget>[
-    //     Wrap(
-    //       spacing: 12, // space between two icons
-    //       children: <Widget>[
-    //         Icon(Icons.thumb_up), // icon-1
-    //         Icon(Icons.thumb_down), // icon-2
-    //       ],
-    //     ),
-    //   ]),
-    // ]);
     return Padding(
         padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Card(
@@ -96,11 +61,19 @@ class ReviewTile extends StatelessWidget {
                 child: Wrap(
                   spacing: 12, // space between two icons
                   children: <Widget>[
-                    Icon(Icons.thumb_up), // icon-1
-                    Icon(Icons.thumb_down), // icon-2
+                    IconButton(
+                      icon: Icon(Icons.thumb_up_outlined),
+                      onPressed: () => updateFavorites('like'),
+                    ), // icon-1
+                    IconButton(
+                      icon: Icon(Icons.thumb_down_outlined),
+                      onPressed: () => updateFavorites('dislike'),
+                    ), // icon-2
                   ],
                 )),
           ]),
         ])));
   }
+
+  updateFavorites(String favorite_value) {}
 }
