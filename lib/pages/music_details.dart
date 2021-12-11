@@ -6,6 +6,7 @@ import 'dart:io' show Platform;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:flutter/material.dart';
+import 'package:sour_notes/widgets/review_tile.dart';
 
 import '../models/review.dart';
 import '../widgets/form_input.dart';
@@ -196,7 +197,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                   child: Text('Submit Review and Rating'),
                   onPressed: () => createReview()),
               Container(
-                  color: Colors.white,
+                  color: Color(0xFF303030),
                   margin: EdgeInsets.all(20),
                   child: Column(children: [
                     RichText(
@@ -205,7 +206,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 25,
-                              color: Colors.black,
+                              color: Colors.orangeAccent,
                             ))),
                     FutureBuilder(
                         future: _getAllReviews(),
@@ -226,36 +227,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   //List tile / Song row
-                                  return ListTile(
-                                    title: Text(snapshot.data[index].content),
-                                    subtitle:
-                                        Text('${snapshot.data[index].userId}'),
-                                    trailing:
-                                        Wrap(spacing: 5, children: <Widget>[
-                                      Text(snapshot.data[index].getNotes()),
-                                      if (admin)
-                                        IconButton(
-                                            icon: new Icon(Icons.cancel),
-                                            onPressed: () {
-                                              debugPrint('ready to delete');
-                                              ListView.builder(
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  shrinkWrap: true,
-                                                  itemCount:
-                                                      snapshot.data.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    //List tile / Song row
-                                                    return ListTile(
-                                                        title: Text(''),
-                                                        subtitle: Text(''),
-                                                        trailing: Text(''));
-                                                  });
-                                            })
-                                    ]),
-                                  );
+                                  return ReviewTile(snapshot, index, admin);
                                 });
                           }
                         })
