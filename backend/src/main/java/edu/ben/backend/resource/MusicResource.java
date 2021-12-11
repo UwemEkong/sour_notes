@@ -21,6 +21,12 @@ public class MusicResource {
         return musicService.getAllMusic(sortBy);
     }
 
+
+    @GetMapping(value="/getSongsOnly")
+    public List<MusicDTO> getSongsOnly() {
+        return musicService.getSongsOnly();
+    }
+
     @PostMapping(value="/searchMusic")
     public List<MusicDTO> searchMusic(@RequestBody MusicDTO searchCriteria){
 
