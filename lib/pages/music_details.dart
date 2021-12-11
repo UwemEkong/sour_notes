@@ -90,6 +90,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
   }
 
   bool admin = false;
+  var reviewId = 0;
 
   checkUser() async {
     var url = Platform.isAndroid
@@ -104,8 +105,6 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
       return admin;
     }
   }
-
-  erase() {}
 
   @override
   Widget build(BuildContext context) {
@@ -257,6 +256,9 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                                         IconButton(
                                             icon: new Icon(Icons.cancel),
                                             onPressed: () {
+                                              reviewId =
+                                                  snapshot.data[index].id;
+                                              deleteReview();
                                               debugPrint('ready to delete');
                                               ListView.builder(
                                                   scrollDirection:
@@ -285,6 +287,14 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
         ),
       ),
     );
+  }
+
+  void deleteReview() async {
+    final response = await http.post(
+        Uri.parse(getUrlForReviewsForDevice() + "deleteReview/${reviewId}"));
+    if (response.statusCode == 200) {
+      setState(() {});
+    }
   }
 }
 

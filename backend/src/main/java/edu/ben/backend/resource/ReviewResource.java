@@ -29,4 +29,10 @@ public class ReviewResource {
     public void createReview(@RequestBody ReviewDTO reviewDTO) {
         reviewService.createReview(reviewDTO);
     }
+
+    @RequestMapping("/deleteReview/{reviewId}")
+        public void deleteReview(@PathVariable Long reviewId) {
+            reviewService.deleteReview(reviewId);
+        }
+
 }
