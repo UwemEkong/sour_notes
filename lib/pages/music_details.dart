@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/gestures.dart';
 import 'package:http/http.dart' as http;
 import 'package:sour_notes/models/music.dart';
 import 'dart:io' show Platform;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:flutter/material.dart';
+import 'package:sour_notes/pages/songs_in_album.dart';
 
 import '../models/review.dart';
 import '../widgets/form_input.dart';
@@ -51,26 +53,6 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
     if (response.statusCode == 200) {
       setState(() {});
     }
-  }
-
-  Future<List<String>> _getAllSongsUnderAlbum() async {
-    String url = this.widget.music.deezerUrl;
-
-    var res = await http.get(Uri.parse(url));
-    var body = res.body;
-    var jsonData = json.decode(body);
-
-    List<String> songNames = [];
-
-    if (this.widget.music.isSong) {
-      return songNames;
-    }
-
-    for (var s in jsonData["tracks"]["data"]) {
-      songNames.add(s["title"]);
-    }
-
-    return songNames;
   }
 
 //Get all songs to show on page as default, so in the backend this can maybe be changed to
@@ -174,6 +156,20 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                                   fontSize: 20,
                                   color: Colors.black)),
                           TextSpan(
+                              text: '\n View Songs in this Album',
+                              style: new TextStyle(
+                                  color: Colors.blue, fontSize: 15),
+                              recognizer: new TapGestureRecognizer()
+                                ..onTap = () {
+                                  //When user clicks the row/tile they go to the song's detail page
+                                  Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) =>
+                                              SongsInAlbumPage(
+                                                  this.widget.music)));
+                                }),
+                          TextSpan(
                               text: '\n\n' + this.widget.music.getNotes(),
                               style: TextStyle(
                                   fontWeight: FontWeight.normal,
@@ -183,31 +179,6 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                       ),
                     ),
                     //Songs under Album
-                    FutureBuilder(
-                        future: _getAllSongsUnderAlbum(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          // If JSON data has not arrived yet show loading
-                          if (snapshot.data == null) {
-                            return Container(
-                              child: Center(
-                                child: Text("Loading..."),
-                              ),
-                            );
-                          } else {
-                            //Once the JSON Data has arrived build the list
-                            return ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  //List tile / Song row
-                                  return ListTile(
-                                    title: Text(snapshot.data[index]),
-                                  );
-                                });
-                          }
-                        }),
                   ])),
               Text(
                 'Rate and Write a Review!',
