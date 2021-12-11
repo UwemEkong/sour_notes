@@ -12,7 +12,6 @@ class UpdateDetailsPage extends StatefulWidget {
 }
 
 class _UpdateDetailsPageState extends State<UpdateDetailsPage> {
-
   String? _errorText = "";
   int? attempts = 5;
 
@@ -30,20 +29,19 @@ class _UpdateDetailsPageState extends State<UpdateDetailsPage> {
     super.dispose();
   }
 
-  update(String firstName, String lastName, String email, BuildContext context) async {
-
+  update(String firstName, String lastName, String email,
+      BuildContext context) async {
     // Get current userName
     String? CurrentUserName = "";
     var url = Platform.isAndroid
-          ? 'http://10.0.2.2:8080/api/auth/getloggedinuser'
-          : 'http://localhost:8080/api/auth/getloggedinuser';
-      var res = await http.get(Uri.parse(url));
-      var body = res.body;
+        ? 'http://10.0.2.2:8080/api/auth/getloggedinuser'
+        : 'http://localhost:8080/api/auth/getloggedinuser';
+    var res = await http.get(Uri.parse(url));
+    var body = res.body;
 
-      if (res.body.isNotEmpty) {
-        setState(() => CurrentUserName = json.decode(body)['username']);
-      }
-
+    if (res.body.isNotEmpty) {
+      setState(() => CurrentUserName = json.decode(body)['username']);
+    }
 
     // Edit current userName's profile details
     final response = await http.post(
@@ -102,17 +100,11 @@ class _UpdateDetailsPageState extends State<UpdateDetailsPage> {
                 backgroundColor:
                     MaterialStateProperty.all<Color>(Colors.black)),
             child: Text('Update'),
-            onPressed: () => update(
-                firstNameController.text,
-                lastNameController.text,
-                emailController.text,
-                context),
+            onPressed: () => update(firstNameController.text,
+                lastNameController.text, emailController.text, context),
           ),
         ],
       )),
     );
   }
 }
-
-
-

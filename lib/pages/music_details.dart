@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/gestures.dart';
+
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:sour_notes/models/music.dart';
 import 'dart:io' show Platform;
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:flutter/material.dart';
 import 'package:sour_notes/pages/songs_in_album.dart';
@@ -14,18 +17,14 @@ import '../widgets/form_input.dart';
 
 class MusicDetailPage extends StatefulWidget {
   final Music music;
-
   MusicDetailPage(this.music);
-
   @override
   State<MusicDetailPage> createState() => _MusicDetailPageState();
 }
 
 class _MusicDetailPageState extends State<MusicDetailPage> {
   bool isVisible = true;
-
   var rating = 0;
-
   final postController = TextEditingController();
 
   getUrlForReviewsForDevice() {
@@ -36,6 +35,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
     }
   }
 
+  createPost(String post) async {}
   createReview() async {
     final response = await http.post(
       Uri.parse(getUrlForReviewsForDevice() + "createReview"),
@@ -56,6 +56,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
   }
 
 //Get all songs to show on page as default, so in the backend this can maybe be changed to
+//just the first 10 songs if we have a lot
   Future<List<Review>> _getAllReviews() async {
     String url = getUrlForReviewsForDevice() +
         "getAllReviewsForSong/" +
@@ -112,7 +113,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
     return Scaffold(
       backgroundColor: Color(0xFF303030),
       appBar: AppBar(
-        title: Text(widget.music.title),
+        title: Text(this.widget.music.title),
         backgroundColor: Color(0xFF303030),
       ),
       body: Container(
@@ -286,7 +287,5 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
     );
   }
 }
-
-
 
 // }
