@@ -12,6 +12,8 @@ import 'package:sour_notes/widgets/header.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:sour_notes/widgets/song_card.dart';
 
+import 'package:sour_notes/pages/admin.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -42,7 +44,6 @@ class _HomePageState extends State<HomePage> {
 
   bool admin = false;
   checkUser() async {
-    var test = '';
     var url = Platform.isAndroid
         ? 'http://10.0.2.2:8080/api/auth/getloggedinuser'
         : 'http://localhost:8080/api/auth/getloggedinuser';
@@ -51,11 +52,9 @@ class _HomePageState extends State<HomePage> {
     if (body.length > 1) {
       if (json.decode(body)["username"] == "admin") {
         return !admin;
-      } else {
-        return admin;
       }
+      return admin;
     }
-    throw NullThrownError();
   }
 
   getUrlForMusicForDevice() {
@@ -93,6 +92,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    checkUser();
     return Scaffold(
         appBar: AppBar(
           title: const Text('SourNotes'),
@@ -130,12 +130,12 @@ class _HomePageState extends State<HomePage> {
                       }
                     } else {
                       return Container(
-                        child: Center(
-                          child: Text("Loading..."),
-                        ),
-                      );
+                          child: Center(
+                        child: Text("Loading..."),
+                      ));
                     }
                   }))
         ])));
+    // const color = const Color(0xFF303030);,
   }
 }

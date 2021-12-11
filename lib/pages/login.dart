@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sour_notes/models/loginmessage.dart';
+import 'package:sour_notes/pages/admin.dart';
 import 'package:sour_notes/pages/home_page.dart';
 import 'package:sour_notes/widgets/form_input.dart';
 import '../models/user.dart';
@@ -34,6 +35,23 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  bool admin = true;
+  checkUser() async {
+    var url = Platform.isAndroid
+        ? 'http://10.0.2.2:8080/api/auth/getloggedinuser'
+        : 'http://localhost:8080/api/auth/getloggedinuser';
+    var res = await http.get(Uri.parse(url));
+    var body = res.body;
+    if (body.length > 1) {
+      if (json.decode(body)["username"] == "admin") {
+        admin = true;
+        return admin;
+      }
+      admin = false;
+      return admin;
+    }
+  }
+
   login(String userName, String password, BuildContext context) async {
     String url = getUrlForDevice(userName, password);
     var res = await http.get(Uri.parse(url));
@@ -41,6 +59,7 @@ class _LoginPageState extends State<LoginPage> {
     if (attempts! <= 0) {
       setState(() => _isEnabled = false);
     }
+
     if (body == "Incorrect Username") {
       if (attempts! <= 0) {
         setState(() => attempts = attempts! + 1);
@@ -53,13 +72,19 @@ class _LoginPageState extends State<LoginPage> {
       }
       setState(() => _errorText = "Incorrect Password");
       setState(() => attempts = attempts! - 1);
-    } else {
+    } else if (admin) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => adminPage(),
         ),
       );
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ));
     }
   }
 
