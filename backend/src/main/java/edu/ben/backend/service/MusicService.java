@@ -92,12 +92,18 @@ public class MusicService {
 
     public List<MusicDTO> searchMusic(MusicDTO searchCriteria){
 
-        List<Music> musicResults = musicRepository.findAllByTitle(searchCriteria.getTitle());
+        List<Music> musicResultsTitle = musicRepository.findAllByTitle(searchCriteria.getTitle());
+        List<Music> musicResultsArtist = musicRepository.findAllByArtist(searchCriteria.getArtist());
         List<MusicDTO> musicDTOResults = new ArrayList();
 
-        for (Music music: musicResults) {
+        for (Music music: musicResultsTitle) {
             musicDTOResults.add(new MusicDTO(music.getId(), music.getDeezerUrl(), music.getIsSong(),music.getTitle(), music.getArtist(), music.getAverageRating()));
         }
+
+        for (Music music: musicResultsArtist) {
+            musicDTOResults.add(new MusicDTO(music.getId(), music.getDeezerUrl(), music.getIsSong(),music.getTitle(), music.getArtist(), music.getAverageRating()));
+        }
+
         return musicDTOResults;
     }
 

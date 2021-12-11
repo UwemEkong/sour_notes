@@ -1,11 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:flutter/gestures.dart';
+
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:sour_notes/models/music.dart';
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
+import 'package:sour_notes/pages/songs_in_album.dart';
 
 import '../models/review.dart';
 import '../widgets/form_input.dart';
@@ -119,6 +124,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                   color: Colors.white,
                   padding: EdgeInsets.all(40),
                   child: Column(children: [
+                    //Cover Art
                     FutureBuilder(
                         future: this.widget.music.getCoverArt(),
                         builder:
@@ -151,6 +157,20 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                                   fontSize: 20,
                                   color: Colors.black)),
                           TextSpan(
+                              text: '\n View Songs in this Album',
+                              style: new TextStyle(
+                                  color: Colors.blue, fontSize: 15),
+                              recognizer: new TapGestureRecognizer()
+                                ..onTap = () {
+                                  //When user clicks the row/tile they go to the song's detail page
+                                  Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) =>
+                                              SongsInAlbumPage(
+                                                  this.widget.music)));
+                                }),
+                          TextSpan(
                               text: '\n\n' + this.widget.music.getNotes(),
                               style: TextStyle(
                                   fontWeight: FontWeight.normal,
@@ -159,6 +179,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                         ],
                       ),
                     ),
+                    //Songs under Album
                   ])),
               Text(
                 'Rate and Write a Review!',
@@ -193,6 +214,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
               ElevatedButton(
                   child: Text('Submit Review and Rating'),
                   onPressed: () => createReview()),
+              /////THIS IS WHERE THE LIST OF SONGS UNDER THE ALBUM WILL APPEAR
               Container(
                   color: Colors.white,
                   margin: EdgeInsets.all(20),
