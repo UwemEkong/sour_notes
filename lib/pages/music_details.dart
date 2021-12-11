@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:sour_notes/models/music.dart';
 import 'dart:io' show Platform;
@@ -9,12 +10,17 @@ import 'package:flutter/material.dart';
 import '../models/review.dart';
 import '../widgets/form_input.dart';
 
-class MusicDetailPage extends StatelessWidget {
-  bool isVisible = true;
+class MusicDetailPage extends StatefulWidget {
   final Music music;
-
-  final postController = TextEditingController();
   MusicDetailPage(this.music);
+  @override
+  State<MusicDetailPage> createState() => _MusicDetailPageState();
+}
+
+class _MusicDetailPageState extends State<MusicDetailPage> {
+  bool isVisible = true;
+  var rating = 0;
+  final postController = TextEditingController();
 
   getUrlForReviewsForDevice() {
     if (Platform.isAndroid) {
@@ -25,16 +31,34 @@ class MusicDetailPage extends StatelessWidget {
   }
 
   createPost(String post) async {}
+  createReview() async {
+    final response = await http.post(
+      Uri.parse(getUrlForReviewsForDevice() + "createReview"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'content': postController.text,
+        'rating': rating.toString(),
+        'musicId': this.widget.music.id.toString(),
+        'favorites': "0",
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {});
+    }
+  }
 
 //Get all songs to show on page as default, so in the backend this can maybe be changed to
 //just the first 10 songs if we have a lot
   Future<List<Review>> _getAllReviews() async {
     String url = getUrlForReviewsForDevice() +
         "getAllReviewsForSong/" +
-        "${this.music.id}/";
+        "${this.widget.music.id}/";
     print("URL");
     print(url);
-    print(this.music.id);
+    print(this.widget.music.id);
     var res = await http.get(Uri.parse(url));
     var body = res.body;
     print(body);
@@ -84,7 +108,7 @@ class MusicDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFF303030),
       appBar: AppBar(
-        title: Text(music.title),
+        title: Text(this.widget.music.title),
         backgroundColor: Color(0xFF303030),
       ),
       body: Container(
@@ -96,7 +120,7 @@ class MusicDetailPage extends StatelessWidget {
                   padding: EdgeInsets.all(40),
                   child: Column(children: [
                     FutureBuilder(
-                        future: this.music.getCoverArt(),
+                        future: this.widget.music.getCoverArt(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           // If JSON data has not arrived yet show loading
@@ -113,7 +137,7 @@ class MusicDetailPage extends StatelessWidget {
                         }),
                     RichText(
                       text: TextSpan(
-                        text: this.music.title,
+                        text: this.widget.music.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
@@ -121,13 +145,13 @@ class MusicDetailPage extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                              text: '\n' + this.music.artist,
+                              text: '\n' + this.widget.music.artist,
                               style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 20,
                                   color: Colors.black)),
                           TextSpan(
-                              text: '\n\n' + this.music.getNotes(),
+                              text: '\n\n' + this.widget.music.getNotes(),
                               style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 30,
@@ -136,6 +160,39 @@ class MusicDetailPage extends StatelessWidget {
                       ),
                     ),
                   ])),
+              Text(
+                'Rate and Write a Review!',
+                style: TextStyle(fontSize: 24, color: Colors.white),
+              ),
+              RatingBar(
+                  initialRating: 0,
+                  direction: Axis.horizontal,
+                  itemCount: 5,
+                  allowHalfRating: false,
+                  ratingWidget: RatingWidget(
+                      full: Icon(Icons.music_note, color: Colors.white),
+                      empty: Icon(
+                        Icons.music_note_outlined,
+                        color: Colors.white,
+                      )),
+                  onRatingUpdate: (value) {
+                    rating = value.toInt();
+                  }),
+              Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                  child: TextField(
+                    style: TextStyle(color: Colors.white),
+                    controller: postController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Write a review...',
+                        labelStyle: TextStyle(color: Colors.white),
+                        hintText: 'Write a review..',
+                        hintStyle: TextStyle(color: Colors.white)),
+                  )),
+              ElevatedButton(
+                  child: Text('Submit Review and Rating'),
+                  onPressed: () => createReview()),
               Container(
                   color: Colors.white,
                   margin: EdgeInsets.all(20),
@@ -201,16 +258,6 @@ class MusicDetailPage extends StatelessWidget {
                           }
                         })
                   ])),
-              FormInput(
-                  postController, 'Write a review...', 'Write a review...'),
-              ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black)),
-                  child: Text('Post'),
-                  onPressed: () => createPost(
-                        postController.text,
-                      ))
             ],
           ),
         ),
