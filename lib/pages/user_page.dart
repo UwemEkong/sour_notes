@@ -87,7 +87,7 @@ class _UserPage extends State<UserPage> {
           child: Column(
             children: <Widget>[
               ElevatedButton(
-                child:  Text('Reload'),
+                child: Text('Reload'),
                 onPressed: () {
                   _getUserData();
                 },
@@ -97,7 +97,7 @@ class _UserPage extends State<UserPage> {
                 child: RichText(
                   text: TextSpan(
                     text: 'UserName: ' + userName!,
-                    style:   TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
                       color: Colors.white,
@@ -105,25 +105,25 @@ class _UserPage extends State<UserPage> {
                     children: [
                       TextSpan(
                           text: '\nPassword: ' + password!,
-                          style:   TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
                               color: Colors.white)),
                       TextSpan(
                           text: '\nE-Mail: ' + email!,
-                          style:   TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
                               color: Colors.white)),
                       TextSpan(
                           text: '\nFirst Name: ' + firstName!,
-                          style:   TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
                               color: Colors.white)),
                       TextSpan(
                           text: '\nLast Name: ' + lastName!,
-                          style:   TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
                               color: Colors.white)),
@@ -132,15 +132,15 @@ class _UserPage extends State<UserPage> {
                 ),
               ),
               ElevatedButton(
-                child:   Text('Update Details'),
+                child: Text('Update Details'),
                 onPressed: () => goToUpdateDetails(context),
               ),
               ElevatedButton(
-                child:   Text('Change Password'),
+                child: Text('Change Password'),
                 onPressed: () => goToChangePassword(context),
               ),
               ElevatedButton(
-                child:   Text('Log Out'),
+                child: Text('Log Out'),
                 onPressed: () {
                   _logout();
                 },
@@ -169,10 +169,4 @@ class _UserPage extends State<UserPage> {
       ),
     );
   }
-
-
 }
-
-
-
-
