@@ -37,6 +37,10 @@ class _HomePageState extends State<HomePage> {
     var body = res.body;
 
     if (body.length > 1) {
+      if (json.decode(body)["username"] == "admin") {
+        admin = true;
+        print("ADMIN: " + admin.toString());
+      }
       setState(
           () => _fullname = "Logged in as: " + json.decode(body)["username"]);
     }
