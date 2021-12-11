@@ -57,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
     String url = getUrlForDevice(userName, password);
     var res = await http.get(Uri.parse(url));
     var body = res.body;
+    await checkUser();
     if (attempts! <= 0) {
       setState(() => _isEnabled = false);
     }
