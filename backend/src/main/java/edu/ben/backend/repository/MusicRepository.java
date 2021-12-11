@@ -15,6 +15,7 @@ public interface MusicRepository extends JpaRepository<Music, Long> {
      List<Music> findAllByTitleAndArtist(String title, String artist);
      List<Music> findAll();
      List<Music> findAllByTitle(String title);
+     List<Music> findAllByArtist(String artist);
 
      @Modifying
      @Transactional
