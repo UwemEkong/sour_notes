@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 import '../models/review2.dart';
 
 class UserReviewsPage extends StatefulWidget {
@@ -13,6 +15,18 @@ class UserReviewsPage extends StatefulWidget {
 }
 
 class _UserReviewsPageState extends State<UserReviewsPage> {
+  final editReviewController = TextEditingController();
+  var _editInterfaceVisible = false;
+  var rating = 0;
+  var reviewBeingEdited;
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    editReviewController.dispose();
+    super.dispose();
+  }
+
   getUrlForReviewsForDevice() {
     if (Platform.isAndroid) {
       return 'http://10.0.2.2:8080/';
@@ -55,6 +69,41 @@ class _UserReviewsPageState extends State<UserReviewsPage> {
       reviews.add(review);
     }
     return reviews;
+  }
+
+  openEditReviewInterface() {
+    rating = reviewBeingEdited.rating;
+    editReviewController.text = reviewBeingEdited.content;
+    _editInterfaceVisible = true;
+    setState(() {});
+  }
+
+  closeEditReviewInterface() {
+    rating = 0;
+    editReviewController.text = '';
+    _editInterfaceVisible = false;
+    setState(() {});
+  }
+
+  updateReview() async {
+    print(Uri.parse(getUrlForReviewsForDevice() + "api/review/updateReview"));
+    final response = await http.post(
+      Uri.parse(getUrlForReviewsForDevice() + "api/review/updateReview"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'content': editReviewController.text,
+        'rating': rating.toString(),
+        'id': reviewBeingEdited.id.toString(),
+        'musicId': "",
+        'favorites': "",
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {});
+    }
   }
 
   bool admin = false;
@@ -119,12 +168,22 @@ class _UserReviewsPageState extends State<UserReviewsPage> {
                                 itemBuilder: (BuildContext context, int index) {
                                   //List tile / Song row
                                   return ListTile(
-                                    title: Text(snapshot.data[index].musicTitle),
-                                    subtitle: Text(
-                                        '${snapshot.data[index].content}'),
+                                    title:
+                                        Text('${snapshot.data[index].content}'),
+                                    subtitle:
+                                        Text(snapshot.data[index].musicTitle),
                                     trailing:
                                         Wrap(spacing: 5, children: <Widget>[
                                       Text(snapshot.data[index].getNotes()),
+                                      ElevatedButton(
+                                          child: Text('Edit'),
+                                          onPressed: () => {
+                                                reviewBeingEdited =
+                                                    snapshot.data[index],
+                                                openEditReviewInterface(),
+                                                reviewBeingEdited =
+                                                    snapshot.data[index]
+                                              }),
                                       if (admin)
                                         IconButton(
                                             icon: new Icon(Icons.cancel),
@@ -153,7 +212,52 @@ class _UserReviewsPageState extends State<UserReviewsPage> {
                                   );
                                 });
                           }
-                        })
+                        }),
+                    Visibility(
+                      child: Container(
+                        color: Colors.black,
+                        child: Column(children: [
+                          RatingBar(
+                              initialRating: double.parse('$rating'),
+                              direction: Axis.horizontal,
+                              itemCount: 5,
+                              allowHalfRating: false,
+                              ratingWidget: RatingWidget(
+                                  full: Icon(Icons.music_note,
+                                      color: Colors.white),
+                                  empty: Icon(
+                                    Icons.music_note_outlined,
+                                    color: Colors.white,
+                                  )),
+                              onRatingUpdate: (value) {
+                                rating = value.toInt();
+                              }),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 20, left: 10, right: 10),
+                              child: TextField(
+                                style: TextStyle(color: Colors.white),
+                                controller: editReviewController,
+                                decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Edit review...',
+                                    labelStyle: TextStyle(color: Colors.white),
+                                    hintText: 'Edit review..',
+                                    hintStyle: TextStyle(color: Colors.white)),
+                              )),
+                          ElevatedButton(
+                              child: Text('Update'),
+                              onPressed: () =>
+                                  {updateReview(), closeEditReviewInterface()}),
+                          ElevatedButton(
+                              child: Text('Cancel'),
+                              onPressed: () => {
+                                    closeEditReviewInterface(),
+                                  })
+                        ]),
+                      ),
+                      visible: _editInterfaceVisible,
+                    ),
                   ])),
             ],
           ),

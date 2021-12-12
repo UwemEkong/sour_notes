@@ -14,6 +14,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findAllByMusicId(Long musicId);
     List<Review> findAllByUserId(Long userId);
+    List<Review> findAllById(Long reviewId);
 
     @Modifying
     @Transactional
