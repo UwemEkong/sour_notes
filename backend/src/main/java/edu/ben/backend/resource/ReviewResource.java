@@ -24,10 +24,14 @@ public class ReviewResource {
         return reviewService.getAllReviewsForSongOrAlbum(musicId);
     }
 
-
     @PostMapping(value = "/createReview")
     public void createReview(@RequestBody ReviewDTO reviewDTO) {
         reviewService.createReview(reviewDTO);
+    }
+
+    @PostMapping(value = "/updateReview")
+    public void updateReview(@RequestBody ReviewDTO reviewDTO) {
+        reviewService.updateReview(reviewDTO);
     }
 
     @RequestMapping("/deleteReview/{reviewId}")

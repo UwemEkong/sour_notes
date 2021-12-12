@@ -2,6 +2,7 @@ package edu.ben.backend.service;
 
 import edu.ben.backend.model.Music;
 import edu.ben.backend.model.Review;
+import edu.ben.backend.model.User;
 import edu.ben.backend.model.dto.ReviewDTO;
 import edu.ben.backend.repository.MusicRepository;
 import edu.ben.backend.repository.ReviewRepository;
@@ -41,6 +42,35 @@ public class ReviewService {
         for (Review review: allReviews) {
             ratingTotal+=review.getRating();
         }
+        Integer finalRating = ratingTotal / numRatings;
+        musicRepository.updateAverageRating(reviewDTO.getMusicId(), finalRating);
+    }
+
+    public void updateReview(ReviewDTO reviewDTO) {
+        System.out.println("Updating Review/Rating");
+
+        // FIND REVIEW BY ID
+        List<Review> reviewlist = reviewRepository.findAllById(reviewDTO.getId());
+        if (reviewlist.size() != 1){
+            System.out.println("NO REVIEW WITH ID: " + reviewDTO.getId());
+            return;
+        }
+        Review reviewUpdated = reviewlist.get(0);
+
+        // UPDATE REVIEW CONTENT AND RATING
+        reviewUpdated.setContent(reviewDTO.getContent());
+        reviewUpdated.setRating(reviewDTO.getRating());
+        reviewRepository.save(reviewUpdated);
+
+        // UPDATE MUSIC AVERAGE RATING
+        List<Review> allReviews = reviewRepository.findAllByMusicId(reviewDTO.getMusicId());
+        Integer ratingTotal = reviewDTO.getRating();
+        Integer numRatings = allReviews.size() + 1;
+
+        for (Review review: allReviews) {
+            ratingTotal+=review.getRating();
+        }
+
         Integer finalRating = ratingTotal / numRatings;
         musicRepository.updateAverageRating(reviewDTO.getMusicId(), finalRating);
     }
