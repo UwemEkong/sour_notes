@@ -40,7 +40,7 @@ public class ReviewResource {
     @PostMapping(value = "/updateReview")
     public void updateReview(@RequestBody ReviewDTO reviewDTO) {
         System.out.println("updating review!");
-        //reviewService.updateReview(reviewDTO);
+        reviewService.updateReview(reviewDTO);
     }
 
     @PutMapping(value="/updateFavorites")
