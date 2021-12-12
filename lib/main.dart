@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: SplashScreen(
           seconds: 5,
-          navigateAfterSeconds: HomePage(),
+          navigateAfterSeconds: App(),
           title: new Text(
             'Welcome to SourNotes, share your thoughts and feelings about music here!',
             textAlign: TextAlign.center,
