@@ -50,6 +50,7 @@ public class ReviewService {
         musicRepository.updateAverageRating(reviewDTO.getMusicId(), finalRating);
     }
 
+
     public void updateFavorites(ReviewDTO reviewDTO) {
         String type = getFavoriteType(reviewDTO);
         boolean canFavorite = checkDuplicateFavorite(type, reviewDTO);
@@ -84,5 +85,23 @@ public class ReviewService {
             return "like";
         }
     }
+
+    public void deleteReview(Long reviewId) {
+        System.out.println("Deleting Review");
+        Review review = reviewRepository.getById(reviewId);
+        ReviewDTO reviewDTO = new ReviewDTO (review.getId(),review.getMusicId(), review.getContent(), review.getRating(), review.getUserId(), review.getFavorites());
+         reviewRepository.deleteById(reviewId);
+
+        List<Review> updatedReviews = reviewRepository.findAllByMusicId(reviewDTO.getMusicId());
+        Integer ratingTotal = reviewDTO.getRating();
+        Integer numRatings = updatedReviews.size() + 1;
+        for (Review reviews: updatedReviews) {
+            ratingTotal+=reviews.getRating();
+        }
+        Integer finalRating = ratingTotal / numRatings;
+        musicRepository.updateAverageRating(reviewDTO.getMusicId(), finalRating);
+
+    }
+
 }
 

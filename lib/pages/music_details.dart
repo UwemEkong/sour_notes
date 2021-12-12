@@ -1,30 +1,31 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:flutter/gestures.dart';
+
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:sour_notes/models/music.dart';
 import 'dart:io' show Platform;
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:flutter/material.dart';
 import 'package:sour_notes/widgets/review_tile.dart';
+import 'package:sour_notes/pages/songs_in_album.dart';
 
 import '../models/review.dart';
 import '../widgets/form_input.dart';
 
 class MusicDetailPage extends StatefulWidget {
   final Music music;
-
   MusicDetailPage(this.music);
-
   @override
   State<MusicDetailPage> createState() => _MusicDetailPageState();
 }
 
 class _MusicDetailPageState extends State<MusicDetailPage> {
   bool isVisible = true;
-
   var rating = 0;
-
   final postController = TextEditingController();
 
   getUrlForReviewsForDevice() {
@@ -35,6 +36,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
     }
   }
 
+  createPost(String post) async {}
   createReview() async {
     final response = await http.post(
       Uri.parse(getUrlForReviewsForDevice() + "createReview"),
@@ -55,6 +57,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
   }
 
 //Get all songs to show on page as default, so in the backend this can maybe be changed to
+//just the first 10 songs if we have a lot
   Future<List<Review>> _getAllReviews() async {
     String url = getUrlForReviewsForDevice() +
         "getAllReviewsForSong/" +
@@ -87,6 +90,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
   }
 
   bool admin = false;
+  var reviewId = 0;
 
   checkUser() async {
     var url = Platform.isAndroid
@@ -102,15 +106,13 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
     }
   }
 
-  erase() {}
-
   @override
   Widget build(BuildContext context) {
     checkUser();
     return Scaffold(
       backgroundColor: Color(0xFF303030),
       appBar: AppBar(
-        title: Text(widget.music.title),
+        title: Text(this.widget.music.title),
         backgroundColor: Color(0xFF303030),
       ),
       body: Container(
@@ -121,6 +123,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                   color: Colors.white,
                   padding: EdgeInsets.all(40),
                   child: Column(children: [
+                    //Cover Art
                     FutureBuilder(
                         future: this.widget.music.getCoverArt(),
                         builder:
@@ -153,6 +156,20 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                                   fontSize: 20,
                                   color: Colors.black)),
                           TextSpan(
+                              text: '\n View Songs in this Album',
+                              style: new TextStyle(
+                                  color: Colors.blue, fontSize: 15),
+                              recognizer: new TapGestureRecognizer()
+                                ..onTap = () {
+                                  //When user clicks the row/tile they go to the song's detail page
+                                  Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) =>
+                                              SongsInAlbumPage(
+                                                  this.widget.music)));
+                                }),
+                          TextSpan(
                               text: '\n\n' + this.widget.music.getNotes(),
                               style: TextStyle(
                                   fontWeight: FontWeight.normal,
@@ -161,6 +178,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                         ],
                       ),
                     ),
+                    //Songs under Album
                   ])),
               Text(
                 'Rate and Write a Review!',
@@ -195,6 +213,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
               ElevatedButton(
                   child: Text('Submit Review and Rating'),
                   onPressed: () => createReview()),
+              /////THIS IS WHERE THE LIST OF SONGS UNDER THE ALBUM WILL APPEAR
               Container(
                   color: Color(0xFF303030),
                   margin: EdgeInsets.all(20),
@@ -237,8 +256,14 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
       ),
     );
   }
+
+  void deleteReview() async {
+    final response = await http.post(
+        Uri.parse(getUrlForReviewsForDevice() + "deleteReview/${reviewId}"));
+    if (response.statusCode == 200) {
+      setState(() {});
+    }
+  }
 }
-
-
 
 // }

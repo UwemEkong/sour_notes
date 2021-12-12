@@ -29,8 +29,16 @@ public class ReviewResource {
         reviewService.createReview(reviewDTO);
     }
 
+
     @PutMapping(value="/updateFavorites")
     public void updateFavorites(@RequestBody ReviewDTO reviewDTO) {
         reviewService.updateFavorites(reviewDTO);
     }
+
+    @RequestMapping("/deleteReview/{reviewId}")
+        public void deleteReview(@PathVariable Long reviewId) {
+            reviewService.deleteReview(reviewId);
+        }
+
+
 }
