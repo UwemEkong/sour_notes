@@ -21,6 +21,11 @@ public class MusicResource {
         return musicService.getAllMusic(sortBy);
     }
 
+    @GetMapping(value="/getMusicById/{musicId}")
+    public MusicDTO getMusicById(@PathVariable String musicId){
+        return musicService.getMusicById(musicId);
+    }
+
 
     @GetMapping(value="/getSongsOnly")
     public List<MusicDTO> getSongsOnly() {

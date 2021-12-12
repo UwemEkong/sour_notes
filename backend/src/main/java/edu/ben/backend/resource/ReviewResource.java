@@ -24,6 +24,14 @@ public class ReviewResource {
         return reviewService.getAllReviewsForSongOrAlbum(musicId);
     }
 
+    @GetMapping(value="/getAllReviewsforUser/{userId}")
+    public List<ReviewDTO> getAllReviewsForUser(@PathVariable Long userId){
+      
+        return reviewService.getAllReviewsForUser(userId);
+    }
+
+
+
     @PostMapping(value = "/createReview")
     public void createReview(@RequestBody ReviewDTO reviewDTO) {
         reviewService.createReview(reviewDTO);

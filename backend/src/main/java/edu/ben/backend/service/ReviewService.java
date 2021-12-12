@@ -37,6 +37,18 @@ public class ReviewService {
         return reviewDTOResults;
     }
 
+
+    public List<ReviewDTO> getAllReviewsForUser(Long userId) {
+
+        List<Review> reviewResults = reviewRepository.findAllByUserId(userId);
+        List<ReviewDTO> reviewDTOResults = new ArrayList();
+        for (Review review: reviewResults) {
+            reviewDTOResults.add(new ReviewDTO(review.getId(), review.getUserId(), review.getContent(), review.getRating(), review.getMusicId(), review.getFavorites()));
+        }
+
+        return reviewDTOResults;
+    }
+    
     public void createReview(ReviewDTO reviewDTO) {
         System.out.println("CREATED REVIEW");
         reviewRepository.save(new Review(authenticationService.loggedInUser.getId(), reviewDTO.getContent(), reviewDTO.getRating(), reviewDTO.getMusicId(), reviewDTO.getFavorites()));
