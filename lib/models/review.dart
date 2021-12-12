@@ -3,8 +3,7 @@ class Review {
   int userId;
   String content;
   int rating;
-  int songId;
-  int albumId;
+  int musicId;
   int favorites;
 
   Review(
@@ -12,8 +11,7 @@ class Review {
       required this.userId,
       required this.content,
       required this.rating,
-      required this.songId,
-      required this.albumId,
+      required this.musicId,
       required this.favorites});
 
   getNotes() {

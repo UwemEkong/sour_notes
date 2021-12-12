@@ -60,6 +60,15 @@ CREATE TABLE IF NOT EXISTS `SourNotes`.`music` (
   UNIQUE INDEX `deezer_url_UNIQUE` (`deezer_url` ASC) VISIBLE)
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `SourNotes`.`favorite` (
+  `id` INT NOT NULL auto_increment,
+  `user_id` INT NOT NULL,
+  `review_id` INT NOT NULL,
+  `type` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
