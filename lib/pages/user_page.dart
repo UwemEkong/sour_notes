@@ -78,10 +78,6 @@ class _UserPage extends State<UserPage> {
     _getUserData();
     return Scaffold(
       backgroundColor: Color(0xFF303030),
-      appBar: AppBar(
-        title: Text('Welcome ' + firstName!),
-        backgroundColor: Color(0xFF303030),
-      ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
