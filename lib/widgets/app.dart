@@ -24,14 +24,9 @@ class AppState extends State<App> {
         widget: HomePage(),
         NavigationItemKey: GlobalKey<NavigatorState>()),
     NavigationItem(
-        icon: const Icon(Icons.person),
-        title: const Text("Login"),
+        icon: Icon(Icons.person),
+        title: _isAuthed ? Text("Profile") : Text("Account"),
         widget: const AuthPage(),
-        NavigationItemKey: GlobalKey<NavigatorState>()),
-    NavigationItem(
-        icon: const Icon(Icons.settings),
-        title: const Text("Profile"),
-        widget: const UserPage(),
         NavigationItemKey: GlobalKey<NavigatorState>()),
     NavigationItem(
         icon: const Icon(Icons.music_note),
@@ -49,6 +44,8 @@ class AppState extends State<App> {
         widget: AboutUsPage(),
         NavigationItemKey: GlobalKey<NavigatorState>())
   ];
+
+  static var _isAuthed = false;
 
   Widget _navigationTab(
       {required GlobalKey<NavigatorState> naviKey, required Widget widget}) {

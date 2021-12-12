@@ -82,11 +82,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(),
-          ));
+      Navigator.pop(context);
     }
   }
 
