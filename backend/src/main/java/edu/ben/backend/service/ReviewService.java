@@ -1,8 +1,11 @@
 package edu.ben.backend.service;
 
+import edu.ben.backend.exception.DuplicateFavoriteException;
+import edu.ben.backend.model.Favorite;
 import edu.ben.backend.model.Music;
 import edu.ben.backend.model.Review;
 import edu.ben.backend.model.dto.ReviewDTO;
+import edu.ben.backend.repository.FavoriteRepository;
 import edu.ben.backend.repository.MusicRepository;
 import edu.ben.backend.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
@@ -14,11 +17,13 @@ public class ReviewService {
     ReviewRepository reviewRepository;
     AuthenticationService authenticationService;
     MusicRepository musicRepository;
+    FavoriteRepository favoriteRepository;
 
-    public ReviewService(ReviewRepository reviewRepository, AuthenticationService authenticationService, MusicRepository musicRepository) {
+    public ReviewService(ReviewRepository reviewRepository, AuthenticationService authenticationService, MusicRepository musicRepository, FavoriteRepository favoriteRepository) {
         this.reviewRepository = reviewRepository;
         this.authenticationService = authenticationService;
         this.musicRepository = musicRepository;
+        this.favoriteRepository = favoriteRepository;
     }
 
     public List<ReviewDTO> getAllReviewsForSongOrAlbum(Long musicId) {
@@ -43,6 +48,41 @@ public class ReviewService {
         }
         Integer finalRating = ratingTotal / numRatings;
         musicRepository.updateAverageRating(reviewDTO.getMusicId(), finalRating);
+    }
+
+    public void updateFavorites(ReviewDTO reviewDTO) {
+        String type = getFavoriteType(reviewDTO);
+        boolean canFavorite = checkDuplicateFavorite(type, reviewDTO);
+
+        if (canFavorite) {
+            reviewRepository.updateFavorites(reviewDTO.getId(), reviewDTO.getFavorites());
+        } else {
+            throw new DuplicateFavoriteException();
+        }
+
+    }
+
+    private boolean checkDuplicateFavorite(String type, ReviewDTO reviewDTO) {
+        Favorite previousFavorite = favoriteRepository.findFavoriteByUserIdAndReviewId(authenticationService.getLoggedInUser().getId(), reviewDTO.getId());
+
+        if (previousFavorite == null) {
+            favoriteRepository.save(new Favorite(authenticationService.getLoggedInUser().getId(), reviewDTO.getId(), type));
+            return true;
+        } else if (!previousFavorite.getType().equals(type)) {
+            favoriteRepository.updateFavorites(previousFavorite.getId(), type);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private String getFavoriteType(ReviewDTO reviewDTO) {
+        Review review = reviewRepository.getById(reviewDTO.getId());
+        if (review.getFavorites() > reviewDTO.getFavorites()) {
+            return "dislike";
+        } else {
+            return "like";
+        }
     }
 }
 

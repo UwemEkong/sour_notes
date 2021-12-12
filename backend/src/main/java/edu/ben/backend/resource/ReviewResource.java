@@ -24,9 +24,13 @@ public class ReviewResource {
         return reviewService.getAllReviewsForSongOrAlbum(musicId);
     }
 
-
     @PostMapping(value = "/createReview")
     public void createReview(@RequestBody ReviewDTO reviewDTO) {
         reviewService.createReview(reviewDTO);
+    }
+
+    @PutMapping(value="/updateFavorites")
+    public void updateFavorites(@RequestBody ReviewDTO reviewDTO) {
+        reviewService.updateFavorites(reviewDTO);
     }
 }

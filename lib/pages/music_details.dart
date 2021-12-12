@@ -75,8 +75,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
           userId: s["userId"],
           content: s["content"],
           rating: s["rating"],
-          songId: (s["songId"] == null ? (-1) : s["songId"]),
-          albumId: (s["albumId"] == null ? (-1) : s["albumId"]),
+          musicId: s["musicId"],
           favorites: s["favorites"]);
 
       reviews.add(review);
