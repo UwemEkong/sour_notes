@@ -13,6 +13,7 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findAllByMusicId(Long musicId);
+    List<Review> findAllByUserId(Long userId);
 
     @Modifying
     @Transactional
