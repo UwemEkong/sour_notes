@@ -26,9 +26,10 @@ public class ReviewResource {
 
     @GetMapping(value="/getAllReviewsforUser/{userId}")
     public List<ReviewDTO> getAllReviewsForUser(@PathVariable Long userId){
-
+      
         return reviewService.getAllReviewsForUser(userId);
     }
+
 
 
     @PostMapping(value = "/createReview")
@@ -36,9 +37,16 @@ public class ReviewResource {
         reviewService.createReview(reviewDTO);
     }
 
+
+    @PutMapping(value="/updateFavorites")
+    public void updateFavorites(@RequestBody ReviewDTO reviewDTO) {
+        reviewService.updateFavorites(reviewDTO);
+    }
+
     @RequestMapping("/deleteReview/{reviewId}")
         public void deleteReview(@PathVariable Long reviewId) {
             reviewService.deleteReview(reviewId);
         }
+
 
 }

@@ -10,6 +10,7 @@ import 'package:sour_notes/models/music.dart';
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
+import 'package:sour_notes/widgets/review_tile.dart';
 import 'package:sour_notes/pages/songs_in_album.dart';
 
 import '../models/review.dart';
@@ -77,8 +78,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
           userId: s["userId"],
           content: s["content"],
           rating: s["rating"],
-          songId: (s["songId"] == null ? (-1) : s["songId"]),
-          albumId: (s["albumId"] == null ? (-1) : s["albumId"]),
+          musicId: s["musicId"],
           favorites: s["favorites"]);
 
       reviews.add(review);
@@ -215,7 +215,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                   onPressed: () => createReview()),
               /////THIS IS WHERE THE LIST OF SONGS UNDER THE ALBUM WILL APPEAR
               Container(
-                  color: Colors.white,
+                  color: Color(0xFF303030),
                   margin: EdgeInsets.all(20),
                   child: Column(children: [
                     RichText(
@@ -224,7 +224,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 25,
-                              color: Colors.black,
+                              color: Colors.orangeAccent,
                             ))),
                     FutureBuilder(
                         future: _getAllReviews(),
@@ -245,39 +245,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   //List tile / Song row
-                                  return ListTile(
-                                    title: Text(snapshot.data[index].content),
-                                    subtitle:
-                                        Text('${snapshot.data[index].userId}'),
-                                    trailing:
-                                        Wrap(spacing: 5, children: <Widget>[
-                                      Text(snapshot.data[index].getNotes()),
-                                      if (admin)
-                                        IconButton(
-                                            icon: new Icon(Icons.cancel),
-                                            onPressed: () {
-                                              reviewId =
-                                                  snapshot.data[index].id;
-                                              deleteReview();
-                                              debugPrint('ready to delete');
-                                              ListView.builder(
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  shrinkWrap: true,
-                                                  itemCount:
-                                                      snapshot.data.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    //List tile / Song row
-                                                    return ListTile(
-                                                        title: Text(''),
-                                                        subtitle: Text(''),
-                                                        trailing: Text(''));
-                                                  });
-                                            })
-                                    ]),
-                                  );
+                                  return ReviewTile(snapshot, index, admin);
                                 });
                           }
                         })

@@ -55,7 +55,7 @@ class _SongCardState extends State<SongCard> {
                         widget.snapshot.data[widget.index].rating);
                   })),
           Padding(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: IconButton(
               icon: isPlaying
                   ? Icon(Icons.pause, color: Colors.blue, size: 50.0)
