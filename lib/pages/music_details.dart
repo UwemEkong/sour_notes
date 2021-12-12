@@ -28,6 +28,13 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
   var rating = 0;
   final postController = TextEditingController();
 
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    postController.dispose();
+    super.dispose();
+  }
+
   getUrlForReviewsForDevice() {
     if (Platform.isAndroid) {
       return 'http://10.0.2.2:8080/api/review/';
@@ -213,7 +220,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
               ElevatedButton(
                   child: Text('Submit Review and Rating'),
                   onPressed: () => createReview()),
-              /////THIS IS WHERE THE LIST OF SONGS UNDER THE ALBUM WILL APPEAR
+              /////THIS IS WHERE THE LIST OF REVIEWS WILL APPEAR
               Container(
                   color: Color(0xFF303030),
                   margin: EdgeInsets.all(20),
