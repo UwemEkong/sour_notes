@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:sour_notes/pages/update_details.dart';
+import 'package:sour_notes/pages/user_reviews.dart';
 import 'change_password.dart';
 
 class UserPage extends StatefulWidget {
@@ -14,6 +15,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPage extends State<UserPage> {
+  int? id = 0;
   String? userName = "";
   String? password = "";
   String? email = "";
@@ -50,6 +52,8 @@ class _UserPage extends State<UserPage> {
       setState(() => email = json.decode(body)['email']);
       setState(() => firstName = json.decode(body)['firstName']);
       setState(() => lastName = json.decode(body)['lastName']);
+      setState(() => id = json.decode(body)['id']);
+
     }
   }
 
@@ -63,15 +67,10 @@ class _UserPage extends State<UserPage> {
     setState(() => email = '');
     setState(() => firstName = '');
     setState(() => lastName = '');
+    setState(() => id = 0);
   }
 
-  _reload() async {
-    setState(() => userName = '');
-    setState(() => password = '');
-    setState(() => email = '');
-    setState(() => firstName = '');
-    setState(() => lastName = '');
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -96,13 +95,21 @@ class _UserPage extends State<UserPage> {
                 padding: EdgeInsets.all(15),
                 child: RichText(
                   text: TextSpan(
-                    text: 'UserName: ' + userName!,
+                    // text: 'ID: ' +  "$id",
+                    text: 'Your Details:',
+
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 30,
+                      fontSize: 40,
                       color: Colors.white,
                     ),
                     children: [
+                      TextSpan(
+                          text: '\nUserName: ' + userName!,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              color: Colors.white)),
                       TextSpan(
                           text: '\nPassword: ' + password!,
                           style: TextStyle(
@@ -132,6 +139,10 @@ class _UserPage extends State<UserPage> {
                 ),
               ),
               ElevatedButton(
+                child: Text('My Reviews'),
+                onPressed: () => goToMyReviews(context),
+              ),
+              ElevatedButton(
                 child: Text('Update Details'),
                 onPressed: () => goToUpdateDetails(context),
               ),
@@ -151,6 +162,16 @@ class _UserPage extends State<UserPage> {
       ),
     );
   }
+
+  goToMyReviews(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UserReviewsPage(id!),
+      ),
+    );
+  }
+
 
   goToUpdateDetails(BuildContext context) {
     Navigator.push(
