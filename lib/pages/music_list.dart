@@ -176,6 +176,7 @@ class _MusicListPage extends State<MusicListPage> {
                       } else {
                         //Once the JSON Data has arrived build the list
                         return ListView.builder(
+                            physics: const PageScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemCount: snapshot.data.length,
