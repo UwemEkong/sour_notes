@@ -28,6 +28,11 @@ public class AuthenticationExceptionController {
         return new ResponseEntity<>("Error: Review must be between 1 and 250 characters", HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = ReviewAlreadyExistsException.class)
+    public ResponseEntity<Object> exception(ReviewAlreadyExistsException exception) {
+        return new ResponseEntity<>("Error: Limit 1 review per user per song/album", HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(value = DuplicateUsernameException.class)
     public ResponseEntity<Object> exception(DuplicateUsernameException exception) {
         return new ResponseEntity<>("Duplicate Username", HttpStatus.NOT_FOUND);
