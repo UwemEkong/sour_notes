@@ -30,6 +30,11 @@ public class ReviewResource {
         return reviewService.getAllReviewsForUser(userId);
     }
 
+    @GetMapping(value="/getReview/{reviewId}")
+    public ReviewDTO getAllReview(@PathVariable Long reviewId){
+        return reviewService.getReview(reviewId);
+    }
+
 
 
     @PostMapping(value = "/createReview")

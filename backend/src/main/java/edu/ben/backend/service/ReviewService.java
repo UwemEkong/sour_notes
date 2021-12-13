@@ -144,5 +144,13 @@ public class ReviewService {
 
     }
 
+    public ReviewDTO getReview(Long reviewId) {
+        Optional<Review> review = reviewRepository.findById(reviewId);
+        if (review.isPresent()) {
+            return new ReviewDTO(review.get().getId(), review.get().getUserId(), review.get().getContent(), review.get().getRating(), review.get().getMusicId(), review.get().getFavorites());
+        } else {
+            return null;
+        }
+    }
 }
 
