@@ -23,6 +23,11 @@ public class AuthenticationExceptionController {
         return new ResponseEntity<>("Password must be at least 8 characters long", HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = InvalidContentLengthException.class)
+    public ResponseEntity<Object> exception(InvalidContentLengthException exception) {
+        return new ResponseEntity<>("Error: Review must be between 1 and 250 characters", HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(value = DuplicateUsernameException.class)
     public ResponseEntity<Object> exception(DuplicateUsernameException exception) {
         return new ResponseEntity<>("Duplicate Username", HttpStatus.NOT_FOUND);
