@@ -165,20 +165,21 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                                   fontWeight: FontWeight.normal,
                                   fontSize: 20,
                                   color: Colors.black)),
-                          TextSpan(
-                              text: '\n View Songs in this Album',
-                              style: new TextStyle(
-                                  color: Colors.blue, fontSize: 15),
-                              recognizer: new TapGestureRecognizer()
-                                ..onTap = () {
-                                  //When user clicks the row/tile they go to the song's detail page
-                                  Navigator.push(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (context) =>
-                                              SongsInAlbumPage(
-                                                  this.widget.music)));
-                                }),
+                          if (!this.widget.music.isSong)
+                            TextSpan(
+                                text: '\n View Songs in this Album',
+                                style: new TextStyle(
+                                    color: Colors.blue, fontSize: 15),
+                                recognizer: new TapGestureRecognizer()
+                                  ..onTap = () {
+                                    //When user clicks the row/tile they go to the song's detail page
+                                    Navigator.push(
+                                        context,
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                SongsInAlbumPage(
+                                                    this.widget.music)));
+                                  }),
                           TextSpan(
                               text: '\n\n' + this.widget.music.getNotes(),
                               style: TextStyle(
