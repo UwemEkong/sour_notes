@@ -106,7 +106,7 @@ class _UserReviewsPageState extends State<UserReviewsPage> {
     if (response.statusCode != 200) {
       setState(() => _errorText = response.body);
     } else {
-      Navigator.pop(context, true);
+      setState(() {});
     }
   }
 

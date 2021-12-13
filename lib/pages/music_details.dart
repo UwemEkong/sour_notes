@@ -62,7 +62,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
     if (response.statusCode != 200) {
       setState(() => _errorText = response.body);
     } else {
-      Navigator.pop(context, true);
+      setState(() {});
     }
   }
 
