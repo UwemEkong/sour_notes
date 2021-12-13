@@ -93,7 +93,6 @@ class _ReviewTileState extends State<ReviewTile> {
     var res = await http.get(Uri.parse(url));
     var body = res.body;
     print("INITIAL BODY:" + body.runtimeType.toString());
-    var jsonData = json.decode(body);
     if (body.length == 0) {
       hasDeleted = true;
       print("EMPTY REVIEW" + hasDeleted.toString());
