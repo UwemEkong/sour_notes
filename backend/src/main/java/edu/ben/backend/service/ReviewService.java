@@ -49,18 +49,32 @@ public class ReviewService {
 
         return reviewDTOResults;
     }
-    
+
     public void createReview(ReviewDTO reviewDTO) {
 
+        // checks for review limit for user
+        Long userId = authenticationService.getLoggedInUser().getId();
+        Long musicId = reviewDTO.getMusicId();
+
+        boolean reviewAlreadyExists = false;
+        List<Review> userReviewlist = reviewRepository.findAllByUserId(userId);
+
+        for (int i = 0; i < userReviewlist.size(); i++) {
+            if (userReviewlist.get(i).getMusicId() == musicId)
+            {
+                reviewAlreadyExists = true;
+            }
+        }
+        if (reviewAlreadyExists == true){
+            throw new ReviewAlreadyExistsException();
+        }
+
+        // check for review character count
         if (reviewDTO.getContent().length() < 1 || reviewDTO.getContent().length() > 250) {
             throw new InvalidContentLengthException();
         }
 
-        
-
-
-
-
+        // creates review
         System.out.println("CREATED REVIEW");
         reviewRepository.save(new Review(authenticationService.loggedInUser.getId(), reviewDTO.getContent(), reviewDTO.getRating(), reviewDTO.getMusicId(), reviewDTO.getFavorites()));
         List<Review> allReviews = reviewRepository.findAllByMusicId(reviewDTO.getMusicId());

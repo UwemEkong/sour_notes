@@ -106,6 +106,7 @@ class _UserReviewsPageState extends State<UserReviewsPage> {
     if (response.statusCode != 200) {
       setState(() => _errorText = response.body);
     } else {
+      setState(() => _errorText = '');
       setState(() {});
     }
   }
