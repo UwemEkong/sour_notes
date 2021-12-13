@@ -46,24 +46,29 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
 
   createPost(String post) async {}
   createReview() async {
-    final response = await http.post(
-      Uri.parse(getUrlForReviewsForDevice() + "createReview"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'content': postController.text,
-        'rating': rating.toString(),
-        'musicId': this.widget.music.id.toString(),
-        'favorites': "0",
-      }),
-    );
-
-    if (response.statusCode != 200) {
-      setState(() => _errorText = response.body);
-    } else {
-      setState(() => _errorText = '');
+    if (rating == 0) {
+      _errorText = "Rating must be at least 1";
       setState(() {});
+    } else {
+      final response = await http.post(
+        Uri.parse(getUrlForReviewsForDevice() + "createReview"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'content': postController.text,
+          'rating': rating.toString(),
+          'musicId': this.widget.music.id.toString(),
+          'favorites': "0",
+        }),
+      );
+
+      if (response.statusCode != 200) {
+        setState(() => _errorText = response.body);
+      } else {
+        setState(() => _errorText = '');
+        setState(() {});
+      }
     }
   }
 
