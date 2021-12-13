@@ -24,6 +24,7 @@ class MusicDetailPage extends StatefulWidget {
 }
 
 class _MusicDetailPageState extends State<MusicDetailPage> {
+  String? _errorText = "";
   bool isVisible = true;
   var rating = 0;
   final postController = TextEditingController();
@@ -58,7 +59,9 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
       }),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode != 200) {
+      setState(() => _errorText = response.body);
+    } else {
       setState(() {});
     }
   }
@@ -221,6 +224,12 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                   child: Text('Submit Review and Rating'),
                   onPressed: () => createReview()),
               /////THIS IS WHERE THE LIST OF REVIEWS WILL APPEAR
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(_errorText!,
+                    style: TextStyle(
+                        height: 1.25, fontSize: 35, color: Colors.red[500])),
+              ),
               Container(
                   color: Color(0xFF303030),
                   margin: EdgeInsets.all(20),

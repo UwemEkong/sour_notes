@@ -8,6 +8,7 @@ import '../models/review2.dart';
 
 class UserReviewsPage extends StatefulWidget {
   final int? userId;
+
   UserReviewsPage(this.userId);
 
   @override
@@ -15,6 +16,7 @@ class UserReviewsPage extends StatefulWidget {
 }
 
 class _UserReviewsPageState extends State<UserReviewsPage> {
+  String? _errorText = "";
   final editReviewController = TextEditingController();
   var _editInterfaceVisible = false;
   var rating = 0;
@@ -101,7 +103,9 @@ class _UserReviewsPageState extends State<UserReviewsPage> {
       }),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode != 200) {
+      setState(() => _errorText = response.body);
+    } else {
       setState(() {});
     }
   }
@@ -213,6 +217,14 @@ class _UserReviewsPageState extends State<UserReviewsPage> {
                                 });
                           }
                         }),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(_errorText!,
+                          style: TextStyle(
+                              height: 1.25,
+                              fontSize: 35,
+                              color: Colors.red[500])),
+                    ),
                     Visibility(
                       child: Container(
                         color: Colors.black,

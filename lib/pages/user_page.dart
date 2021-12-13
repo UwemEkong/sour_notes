@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sour_notes/pages/update_details.dart';
 import 'package:sour_notes/pages/user_reviews.dart';
 import 'change_password.dart';
+import 'login.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -68,6 +69,13 @@ class _UserPage extends State<UserPage> {
     setState(() => firstName = '');
     setState(() => lastName = '');
     setState(() => id = 0);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(),
+      ),
+    );
   }
 
 

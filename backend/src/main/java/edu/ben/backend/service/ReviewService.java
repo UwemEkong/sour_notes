@@ -1,5 +1,6 @@
 package edu.ben.backend.service;
 
+import edu.ben.backend.exception.*;
 import edu.ben.backend.exception.DuplicateFavoriteException;
 import edu.ben.backend.model.Favorite;
 import edu.ben.backend.model.Music;
@@ -50,6 +51,16 @@ public class ReviewService {
     }
     
     public void createReview(ReviewDTO reviewDTO) {
+
+        if (reviewDTO.getContent().length() < 1 || reviewDTO.getContent().length() > 250) {
+            throw new InvalidContentLengthException();
+        }
+
+        
+
+
+
+
         System.out.println("CREATED REVIEW");
         reviewRepository.save(new Review(authenticationService.loggedInUser.getId(), reviewDTO.getContent(), reviewDTO.getRating(), reviewDTO.getMusicId(), reviewDTO.getFavorites()));
         List<Review> allReviews = reviewRepository.findAllByMusicId(reviewDTO.getMusicId());
@@ -63,6 +74,11 @@ public class ReviewService {
     }
 
     public void updateReview(ReviewDTO reviewDTO) {
+
+        if (reviewDTO.getContent().length() < 1 || reviewDTO.getContent().length() > 250) {
+            throw new InvalidContentLengthException();
+        }
+
         System.out.println("Updating Review/Rating");
 
         // FIND REVIEW BY ID
