@@ -56,12 +56,7 @@ public class ReviewService {
             throw new InvalidContentLengthException();
         }
 
-
-        List<Review> reviewlist = reviewRepository.findAllById(reviewDTO.getId());
-        if (reviewlist.size() != 1){
-            System.out.println("NO REVIEW WITH ID: " + reviewDTO.getId());
-            return;
-        }
+        
 
 
 
