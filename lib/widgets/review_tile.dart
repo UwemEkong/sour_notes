@@ -39,12 +39,38 @@ class _ReviewTileState extends State<ReviewTile> {
     );
 
     if (response.statusCode == 200) {
-      print("HELLO WORLD");
-      widget.snapshot.data[widget.index].favorites = updatedFavorites;
-      checkHasFavorited(widget.snapshot.data[widget.index].id);
-      setState(() {});
+      if (hasLiked &&
+          updatedFavorites < widget.snapshot.data[widget.index].favorites) {
+        print("Liked at first, then changed to a dislike");
+        widget.snapshot.data[widget.index].favorites -= 2;
+        checkHasFavorited(widget.snapshot.data[widget.index].id);
+        setState(() {});
+      } else if (hasDisliked &&
+          updatedFavorites > widget.snapshot.data[widget.index].favorites) {
+        print("Disliked at first, then changed to a like");
+        widget.snapshot.data[widget.index].favorites += 2;
+        checkHasFavorited(widget.snapshot.data[widget.index].id);
+        setState(() {});
+      } else {
+        print("Liked/Disliked for first time");
+        widget.snapshot.data[widget.index].favorites = updatedFavorites;
+        checkHasFavorited(widget.snapshot.data[widget.index].id);
+        setState(() {});
+      }
     } else {
+      print("hi");
       print(response.body);
+      //dislike
+      if (updatedFavorites < widget.snapshot.data[widget.index].favorites) {
+        widget.snapshot.data[widget.index].favorites += 1;
+        hasDisliked = false;
+        hasLiked = false;
+      } else {
+        widget.snapshot.data[widget.index].favorites -= 1;
+        hasDisliked = false;
+        hasLiked = false;
+      }
+      setState(() {});
     }
   }
 
