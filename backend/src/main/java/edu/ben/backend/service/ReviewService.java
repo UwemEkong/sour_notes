@@ -126,21 +126,35 @@ public class ReviewService {
         String type = getFavoriteType(reviewDTO);
         boolean canFavorite = checkDuplicateFavorite(type, reviewDTO);
 
-        if (canFavorite) {
-            reviewRepository.updateFavorites(reviewDTO.getId(), reviewDTO.getFavorites());
-        } else {
+        if (!canFavorite) {
+            Favorite previousFavorite = favoriteRepository.findFavoriteByUserIdAndReviewId(authenticationService.getLoggedInUser().getId(), reviewDTO.getId());
+            if (previousFavorite.getType().equals("like")) {
+                reviewRepository.updateFavorites(reviewDTO.getId(), reviewDTO.getFavorites() - 2);
+            } else {
+                reviewRepository.updateFavorites(reviewDTO.getId(), reviewDTO.getFavorites() + 2);
+            }
+            favoriteRepository.deleteById(previousFavorite.getId());
             throw new DuplicateFavoriteException();
-        }
 
+        }
     }
 
     private boolean checkDuplicateFavorite(String type, ReviewDTO reviewDTO) {
         Favorite previousFavorite = favoriteRepository.findFavoriteByUserIdAndReviewId(authenticationService.getLoggedInUser().getId(), reviewDTO.getId());
+        Review review = reviewRepository.getById(reviewDTO.getId());
 
         if (previousFavorite == null) {
             favoriteRepository.save(new Favorite(authenticationService.getLoggedInUser().getId(), reviewDTO.getId(), type));
+            reviewRepository.updateFavorites(reviewDTO.getId(), reviewDTO.getFavorites());
             return true;
         } else if (!previousFavorite.getType().equals(type)) {
+            if (type.equals("dislike")) {
+                favoriteRepository.updateFavorites(previousFavorite.getId(), type);
+                reviewRepository.updateFavorites(reviewDTO.getId(), review.getFavorites() - 2);
+            } else {
+                favoriteRepository.updateFavorites(previousFavorite.getId(), type);
+                reviewRepository.updateFavorites(reviewDTO.getId(), review.getFavorites() + 2);
+            }
             favoriteRepository.updateFavorites(previousFavorite.getId(), type);
             return true;
         } else {
